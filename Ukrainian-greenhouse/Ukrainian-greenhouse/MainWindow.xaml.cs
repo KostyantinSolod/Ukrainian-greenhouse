@@ -24,5 +24,12 @@ namespace Ukrainian_greenhouse
         {
             InitializeComponent();
         }
+
+        private void Registration_Click(object sender, RoutedEventArgs e)
+        {
+            Registration registration = new Registration();
+            registration.Show();
+            this.Close();
+        }
     }
 }

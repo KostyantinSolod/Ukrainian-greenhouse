@@ -1,0 +1,47 @@
+﻿<Window x:Class="Ukrainian_greenhouse.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ukrainian_greenhouse"
+        Icon="C:\Users\Acer\source\repos\Ukrainian-greenhouse\Ukrainian-greenhouse\Ukrainian-greenhouse/Image.png"
+        
+        Title="Автоматизована система 'Українська теплиця'" Height="450" Width="800">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\Acer\source\repos\Ukrainian-greenhouse\Ukrainian-greenhouse\Ukrainian-greenhouse/teplitsa.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".4*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width=".1*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width=".4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".7*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height=".7*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height=".7*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.7*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Логін" Grid.Column="1" Grid.Row="1"  FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="2" FontSize="36" x:Name="LoginText"></TextBox>
+        <TextBlock Grid.Column="1" Grid.Row="3" x:Name="loginText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text="Email" Grid.Column="3" Grid.Row="1"  FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <TextBox Grid.Column="3" Grid.Row="2" FontSize="36" x:Name="EmailText" ></TextBox>
+        <TextBlock Grid.Column="3" Grid.Row="3" x:Name="emailText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text="Пароль" Grid.Column="1" Grid.Row="4" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <PasswordBox Grid.Column="1" Grid.Row="5" FontSize="36" x:Name="PasswordText" ></PasswordBox>
+        <TextBlock Grid.Column="1" Grid.Row="6" x:Name="passwordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Text=" Повторіть Пароль" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4" FontSize="36"></TextBlock>
+        <PasswordBox Grid.Column="3" Grid.Row="5" FontSize="36" x:Name="SecondPasswordText" ></PasswordBox>
+        <TextBlock Grid.Column="3" Grid.Row="6" x:Name="RepeatpasswordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <Button Grid.Column="1" Grid.Row="7" Content="Регістрація" FontSize="24" Click="Registration_Click"></Button>
+        <Button Grid.Column="3" Grid.Row="7" Content="В мене вже є аккаунт" Click="Login_Click" FontSize="24"></Button>
+    </Grid>
+</Window>
