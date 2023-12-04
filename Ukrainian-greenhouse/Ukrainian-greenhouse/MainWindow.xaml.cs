@@ -1,24 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Npgsql;
 
 namespace Ukrainian_greenhouse
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
@@ -29,14 +13,12 @@ namespace Ukrainian_greenhouse
             connection = new NpgsqlConnection(connectionString);
 
         }
-
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
             Registration registration = new Registration();
             registration.Show();
             this.Close();
         }
-
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             if (Login.Text != "" && Password.Password != "")
@@ -44,28 +26,22 @@ namespace Ukrainian_greenhouse
                 string login = Login.Text;
                 string password = Password.Password;
 
-                // Виклик методу для перевірки логіну та паролю
                 bool isValidUser = ValidateUser(login, password);
 
                 if (isValidUser)
                 {
-                    // Якщо користувач з таким логіном та паролем знайдений
-                    // Тут ви можете виконати дії, які потрібно виконати при успішному вході
                     MessageBox.Show("Успішний вхід!");
                 }
                 else
                 {
-                    // Повідомлення про невірний логін або пароль
                     MessageBox.Show("Невірний логін або пароль!");
                 }
             }
             else
             {
-                // Повідомлення про те, що поля логіну та пароля повинні бути заповненими
                 MessageBox.Show("Будь ласка, введіть логін та пароль!");
             }
         }
-
         private bool ValidateUser(string login, string password)
         {
             bool isValid = false;
@@ -90,6 +66,5 @@ namespace Ukrainian_greenhouse
             }
             return isValid;
         }
-
     }
 }
