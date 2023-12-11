@@ -32,9 +32,6 @@
         <TextBlock Text="Логін" Grid.Column="1" Grid.Row="1"  FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
         <TextBox Grid.Column="1" Grid.Row="2" FontSize="36" x:Name="LoginText"></TextBox>
         <TextBlock Grid.Column="1" Grid.Row="3" x:Name="loginText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <TextBlock Text="Email" Grid.Column="3" Grid.Row="1"  FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <TextBox Grid.Column="3" Grid.Row="2" FontSize="36" x:Name="EmailText" ></TextBox>
-        <TextBlock Grid.Column="3" Grid.Row="3" x:Name="emailText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
         <TextBlock Text="Пароль" Grid.Column="1" Grid.Row="4" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
         <PasswordBox Grid.Column="1" Grid.Row="5" FontSize="36" x:Name="PasswordText" ></PasswordBox>
         <TextBlock Grid.Column="1" Grid.Row="6" x:Name="passwordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>

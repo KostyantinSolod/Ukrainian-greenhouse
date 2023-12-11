@@ -36,12 +36,12 @@ namespace Ukrainian_greenhouse
 
         private void Registration_Click(object sender, RoutedEventArgs e)
         {
-            emailText.Text = "";
+            
             loginText.Text = "";
             RepeatpasswordText.Text = "";
-            if (LoginText.Text != "" || EmailText.Text != "" || PasswordText.Password != "" || SecondPasswordText.Password != "")
+            if (LoginText.Text != "" || PasswordText.Password != "" || SecondPasswordText.Password != "")
             {
-                if (LoginText.Text.Contains(" ") || EmailText.Text.Contains(" ") || PasswordText.Password.Contains(" ") || SecondPasswordText.Password.Contains(" "))
+                if (LoginText.Text.Contains(" ")  || PasswordText.Password.Contains(" ") || SecondPasswordText.Password.Contains(" "))
                 {
                     MessageBox.Show("Пробіли в полях недопустимі!");
                     return;
@@ -49,19 +49,10 @@ namespace Ukrainian_greenhouse
                 else if (PasswordText.Password == SecondPasswordText.Password)
                 {
                     string login = LoginText.Text;
-                    string email = EmailText.Text;
 
                     if (!IsLoginExist(login))
                     {
-                        if (!IsEmailExist(email))
-                        {
-                            RegisterNewUser(login, email, PasswordText.Password);
-                            Login_Click(sender, e);
-                        }
-                        else
-                        {
-                            emailText.Text = "Цей email вже зареєстрований";
-                        }
+                        Login_Click(sender, e);
                     }
                     else
                     {
@@ -104,40 +95,15 @@ namespace Ukrainian_greenhouse
             return exist;
         }
 
-        private bool IsEmailExist(string email)
-        {
-            bool exist = false;
-            try
-            {
-                connection.Open();
-                string query = "SELECT COUNT(*) FROM users WHERE email = @Email";
-                using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
-                {
-                    cmd.Parameters.AddWithValue("Email", email);
-                    exist = (long)cmd.ExecuteScalar() > 0;
-                }
-            }
-            catch (NpgsqlException ex)
-            {
-                Console.WriteLine("Помилка перевірки email: " + ex.Message);
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return exist;
-        }
-
-        private void RegisterNewUser(string login, string email, string password)
+        private void RegisterNewUser(string login, string password)
         {
             try
             {
                 connection.Open();
-                string query = "INSERT INTO users (login, email, password, role) VALUES (@Login, @Email, @Password, @Role)";
+                string query = "INSERT INTO users (login, password, role) VALUES (@Login, @Password, @Role)";
                 using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("Login", login);
-                    cmd.Parameters.AddWithValue("Email", email);
                     cmd.Parameters.AddWithValue("Password", password);
                     cmd.Parameters.AddWithValue("Role", 0);
                     cmd.ExecuteNonQuery();
