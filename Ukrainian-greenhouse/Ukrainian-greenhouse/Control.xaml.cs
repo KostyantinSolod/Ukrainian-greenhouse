@@ -20,7 +20,7 @@ namespace Ukrainian_greenhouse
     /// </summary>
     public partial class Control : Window
     {
-        public string connectionString = "Host = localhost;Username=postgres;Password=123;Database=control";
+        public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
         public Control()
         {
