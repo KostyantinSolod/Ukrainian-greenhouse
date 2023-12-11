@@ -30,7 +30,9 @@ namespace Ukrainian_greenhouse
 
                 if (isValidUser)
                 {
-                    MessageBox.Show("Успішний вхід!");
+                    Control control = new Control();
+                    control.Show();
+                    this.Close();
                 }
                 else
                 {

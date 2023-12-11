@@ -1,0 +1,46 @@
+﻿<Window x:Class="Ukrainian_greenhouse.Control"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ukrainian_greenhouse"
+        mc:Ignorable="d"
+        Title="Control" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <ComboBox x:Name="CMB_Culture" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" SelectionChanged="ComboBox_SelectionChanged" />
+        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Button x:Name="Energy_management" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Button x:Name="Watering_schedule" Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Button x:Name="Greenhouse_monitoring" Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+        <Button x:Name="add_delete" Content="+_delete" Grid.Row="1" Grid.Column="8"/>
+
+    </Grid>
+</Window>
