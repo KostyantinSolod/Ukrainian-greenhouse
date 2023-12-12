@@ -5,40 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         Icon="Resources/Image.png"
-        
         Title="Автоматизована система 'Українська теплиця'" Height="450" Width="800">
+    
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MyTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+
+        <Style x:Key="MyTextStyle1" TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+
+        <Style x:Key="MyTextStyle2" TargetType="{x:Type PasswordBox}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Resources/teplitsa.jpg"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".4*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width=".1*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width=".4*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".7*"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height=".7*"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height=".7*"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="0.7*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Text="Логін" Grid.Column="1" Grid.Row="1"  FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="2" FontSize="36" x:Name="LoginText"></TextBox>
-        <TextBlock Grid.Column="1" Grid.Row="3" x:Name="loginText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <TextBlock Text="Пароль" Grid.Column="1" Grid.Row="4" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <PasswordBox Grid.Column="1" Grid.Row="5" FontSize="36" x:Name="PasswordText" ></PasswordBox>
-        <TextBlock Grid.Column="1" Grid.Row="6" x:Name="passwordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <TextBlock Text=" Повторіть Пароль" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4" FontSize="36"></TextBlock>
-        <PasswordBox Grid.Column="3" Grid.Row="5" FontSize="36" x:Name="SecondPasswordText" ></PasswordBox>
-        <TextBlock Grid.Column="3" Grid.Row="6" x:Name="RepeatpasswordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-        <Button Grid.Column="1" Grid.Row="7" Content="Регістрація" FontSize="24" Click="Registration_Click"></Button>
-        <Button Grid.Column="3" Grid.Row="7" Content="В мене вже є аккаунт" Click="Login_Click" FontSize="24"></Button>
+
+        <TextBlock Text="Логін" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="5"  FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}" ></TextBlock>
+        <TextBox Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="5" FontSize="36" x:Name="LoginText" Style="{StaticResource MyTextStyle1}"></TextBox>
+
+        <TextBlock Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="5" x:Name="loginText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+
+        <TextBlock Text="Пароль" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="4" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"></TextBlock>
+        <PasswordBox Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" FontSize="36" x:Name="PasswordText" Style="{StaticResource MyTextStyle2}"></PasswordBox>
+        <TextBlock Grid.Column="2" Grid.Row="6" x:Name="passwordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"></TextBlock>
+
+        <TextBlock Text="Повторіть Пароль" Grid.Column="5" Grid.Row="4" Grid.ColumnSpan="6"  FontSize="36" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"></TextBlock>
+        <PasswordBox Grid.Column="6" Grid.Row="5" Grid.ColumnSpan="4" FontSize="36" x:Name="SecondPasswordText" Style="{StaticResource MyTextStyle2}"></PasswordBox>
+        <TextBlock Grid.Column="7" Grid.Row="6" x:Name="RepeatpasswordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"></TextBlock>
+
+        <Button Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="4" Content="Регістрація" FontSize="24" Click="Registration_Click" Style="{StaticResource  RoundedButtonStylee}"></Button>
+        <Button Grid.Column="6" Grid.Row="7" Grid.ColumnSpan="4" Content="В мене вже є аккаунт" Click="Login_Click" FontSize="24" Style="{StaticResource  RoundedButtonStylee}"></Button>
     </Grid>
 </Window>

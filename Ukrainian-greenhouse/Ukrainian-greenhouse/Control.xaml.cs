@@ -56,5 +56,38 @@ namespace Ukrainian_greenhouse
                 string name = selectedCulture.Name;
             }
         }
+        private void Climate_control_Click(object sender, RoutedEventArgs e)
+        {
+            if (CMB_Culture.SelectedItem is CultureItem selectedCulture)
+            {
+                ClimateControlEditor editWindow = new ClimateControlEditor();
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    using (connection = new NpgsqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        string insertQuery = "INSERT INTO climate_control (list_id, timestamp, temperature, humidity) " +
+                                             "VALUES (@listId, @timestamp, @temperature, @humidity)";
+
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@listId", selectedCulture.Id);
+                            cmd.Parameters.AddWithValue("@timestamp", editWindow.Timestamp);
+                            cmd.Parameters.AddWithValue("@temperature", editWindow.Temperature);
+                            cmd.Parameters.AddWithValue("@humidity", editWindow.Humidity);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    MessageBox.Show("Climate control data added successfully!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

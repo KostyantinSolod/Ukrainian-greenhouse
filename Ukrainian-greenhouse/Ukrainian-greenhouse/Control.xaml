@@ -5,7 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         mc:Ignorable="d"
-        Title="Control" Height="450" Width="800">
+        Title="Control" Height="450" Width="400">
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="LightweightButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -33,14 +64,28 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <ComboBox x:Name="CMB_Culture" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" SelectionChanged="ComboBox_SelectionChanged" />
-        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <Button x:Name="Energy_management" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <Button x:Name="Watering_schedule" Grid.Row="3" Grid.Column="8" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <Button x:Name="Greenhouse_monitoring" Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-        <Button x:Name="add_delete" Content="+_delete" Grid.Row="1" Grid.Column="8"/>
+        <ComboBox x:Name="CMB_Culture" FontSize="17"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" SelectionChanged="ComboBox_SelectionChanged" />
+
+        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}" Click="Climate_control_Click">
+            <TextBlock TextAlignment="Center">Управління<LineBreak/>кліматом</TextBlock>
+        </Button>
+
+        <Button x:Name="Energy_management" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
+            <TextBlock TextAlignment="Center">Управління<LineBreak/>електрикою</TextBlock>
+        </Button>
+
+        <Button x:Name="Watering_schedule" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
+            <TextBlock TextAlignment="Center">Управління<LineBreak/>поливом</TextBlock>
+        </Button>
+
+        <Button x:Name="Greenhouse_monitoring" Grid.Row="7" Grid.Column="6" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
+            <TextBlock TextAlignment="Center">Мониіторинг<LineBreak/>даних</TextBlock>
+        </Button>
+
+        <Button x:Name="add_delete" Grid.Row="1" Grid.Column="8" Style="{StaticResource LightweightButton}">
+            <Image Source="D:\GREENHOUSE\Ukrainian-greenhouse\Ukrainian-greenhouse\Ukrainian-greenhouse\Resources/icons8-карандаш-50.png" Stretch="Fill" Margin="0,2,0,2"/>
+        </Button>
 
     </Grid>
 </Window>
