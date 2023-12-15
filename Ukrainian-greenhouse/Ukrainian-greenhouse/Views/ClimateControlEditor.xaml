@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Ukrainian_greenhouse.ViewModels"
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         mc:Ignorable="d"
         Title="ClimateControlEditor" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:/>
+    </Window.DataContext>
     <Window.Resources>
         <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
@@ -53,16 +57,13 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Button x:Name="Save_climat" Content="Save" Click="Save_Click" Grid.Column="4" Grid.Row="9" Grid.ColumnSpan="3" Style="{StaticResource  RoundedButtonStylee}"/>
-
-        <Label Content="Час:" Grid.Column="1" Grid.Row="0"/>
-        <TextBox x:Name="TxtTimestamp" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <Button x:Name="Save_climat" Content="Save" Command="{Binding ClimateControl}" Grid.Column="4" Grid.Row="9" Grid.ColumnSpan="3" Style="{StaticResource  RoundedButtonStylee}"/>
 
         <Label Content="Температура:" Grid.Column="1" Grid.Row="2"/>
-        <TextBox x:Name="TxtTemperature" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
+        <TextBox Text="{Binding Temperature}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"/>
 
         <Label Content="Вологість:" Grid.Column="1" Grid.Row="4"/>
-        <TextBox  x:Name="TxtHumidity" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3"/>
+        <TextBox Text="{Binding Humidity}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3"/>
 
 
     </Grid>

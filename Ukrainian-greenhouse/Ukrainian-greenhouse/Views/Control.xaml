@@ -73,7 +73,7 @@
                   DisplayMemberPath="Name"
                   SelectedItem="{Binding SelectedCultureItem}"/>
 
-        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}" Click="Climate_control_Click">
+        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
             <TextBlock TextAlignment="Center">Управління<LineBreak/>кліматом</TextBlock>
         </Button>
 

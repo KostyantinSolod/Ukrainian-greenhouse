@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +11,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data;
 using Ukrainian_greenhouse.ViewModels;
 
 namespace Ukrainian_greenhouse
 {
-    public partial class Control : Window
+    public partial class ClimateControlEditor : Window
     {
-        
-        public Control()
+        public ClimateControlEditor()
         {
             InitializeComponent();
-            DataContext = new ControlViewModel();
+
+            DataContext = new ClimateControlEditorModel();
         }
+       
     }
 }
