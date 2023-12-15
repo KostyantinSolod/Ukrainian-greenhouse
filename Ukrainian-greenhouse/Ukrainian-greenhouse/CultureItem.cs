@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ukrainian_greenhouse
 {
-    public class CultureItem
+    class CultureItem
     {
         public int Id { get; set; }
         public string Name { get; set; }

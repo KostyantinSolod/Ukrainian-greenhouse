@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using Npgsql;
 
 
-namespace Ukrainian_greenhouse
+namespace Ukrainian_greenhouse.Views
 {
     public partial class Registration : Window
     {
@@ -29,9 +29,9 @@ namespace Ukrainian_greenhouse
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow Login = new MainWindow();
-            Login.Show();
-            this.Close();
+            Application.Current.MainWindow = new MainWindow();
+            Application.Current.MainWindow.Show();
+            this.Close(); 
         }
 
         private void Registration_Click(object sender, RoutedEventArgs e)
