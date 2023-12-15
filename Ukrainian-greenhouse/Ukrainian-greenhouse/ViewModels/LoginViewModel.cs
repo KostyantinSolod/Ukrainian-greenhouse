@@ -9,13 +9,16 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
+        string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
+        private NpgsqlConnection connection;
         private readonly UserModel _userModel;
-
         public LoginViewModel()
         {
             _userModel = new UserModel();
+            connection = new NpgsqlConnection(connectionString);
         }
-
+        
+        
         public UserModel User => _userModel;
 
         private ICommand _loginCommand;
@@ -69,7 +72,7 @@ namespace Ukrainian_greenhouse.ViewModels
         private bool ValidateUser(string login, PasswordBox password)
         {
             bool isValid = false;
-            string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
+            
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 try
@@ -92,12 +95,10 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Registration()
         {
-            Registration registration = new Registration();
-            registration.Show();
-            if (Application.Current.MainWindow != null)
-            {
-                Application.Current.MainWindow.Close();
-            }
+            Registration RegistrationWindow = new Registration();
+            RegistrationWindow.Show();
+            Application.Current.MainWindow.Hide();
+            
         }
         
     }

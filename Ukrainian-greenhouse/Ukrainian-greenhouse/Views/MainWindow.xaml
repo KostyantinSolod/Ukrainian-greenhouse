@@ -61,15 +61,16 @@
             <RowDefinition ></RowDefinition>
             <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
-        
+        <TextBlock Text="Логін" Grid.Column="2" Grid.Row="1" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"/>
         <TextBox Grid.Column="1" Grid.Row="2" FontSize="36" Grid.ColumnSpan="3" 
                  Text="{Binding User.Login, UpdateSourceTrigger=PropertyChanged}" 
                  Style="{StaticResource MyTextStyle1}"/>
+        <TextBlock Text="Пароль" Grid.Column="2" Grid.Row="4" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"/>
         <PasswordBox Grid.Column="1" Grid.Row="5" FontSize="36" Grid.ColumnSpan="3" x:Name="Password" Style="{StaticResource MyTextStyle2}"/>
-
         <Button Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3"  Content="Увійти" FontSize="24" 
                 Command="{Binding LoginCommand}" 
                 Style="{StaticResource RoundedButtonStylee}" ></Button>
+
         <Button Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3"  Content="Регістрація" FontSize="24" 
         Command="{Binding RegistrationCommand}" 
         Style="{StaticResource RoundedButtonStylee}" ></Button>
