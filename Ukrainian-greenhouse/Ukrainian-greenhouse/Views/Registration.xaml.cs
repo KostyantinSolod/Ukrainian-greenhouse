@@ -14,7 +14,7 @@ namespace Ukrainian_greenhouse.Views
         public Registration()
         {
             InitializeComponent();
-            var viewModel = new RegistrationViewModel();
+            var viewModel = new RegistrationViewModel() ;
             DataContext = viewModel;
             viewModel.RegistrationWindow = this;
         }

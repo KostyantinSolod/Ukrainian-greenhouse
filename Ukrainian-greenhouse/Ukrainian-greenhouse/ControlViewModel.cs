@@ -1,28 +1,40 @@
 ﻿using Npgsql;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Ukrainian_greenhouse.Views;
 
 namespace Ukrainian_greenhouse
 {
-    public partial class Control : Window
+    class ControlViewModel : BaseViewModel
     {
         public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
-        public Control()
+
+        public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
+
+        private ICommand _climateControl;
+        public ICommand ClimateControl
         {
-            InitializeComponent();
-            LoadData();
+            get
+            {
+                return _climateControl ?? (_climateControl = new RelayCommand(
+                    param => Climate_control()
+                ));
+            }
+        }
+
+        private CultureItem _selectedCultureItem;
+
+        public CultureItem SelectedCultureItem
+        {
+            get { return _selectedCultureItem; }
+            set
+            {
+                _selectedCultureItem = value;
+                OnPropertyChanged(nameof(SelectedCultureItem));
+            }
         }
 
         private void LoadData()
@@ -42,24 +54,35 @@ namespace Ukrainian_greenhouse
                             Name = reader.GetString(1)
                         };
 
-                        CMB_Culture.Items.Add(cultureItem);
+                        CmbBoxItems.Add(cultureItem);
                     }
                 }
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private ICommand _comboBoxSelectionChanged;
+        public ICommand ComboBoxSelectionChanged
         {
-            if (CMB_Culture.SelectedItem is CultureItem selectedCulture)
+            get
             {
-                int id = selectedCulture.Id;
-                string name = selectedCulture.Name;
+                return _comboBoxSelectionChanged ?? (_comboBoxSelectionChanged = new RelayCommand(
+                    param => ComboBox_SelectionChanged()
+                ));
             }
         }
 
-        private void Climate_control_Click(object sender, RoutedEventArgs e)
+        private void ComboBox_SelectionChanged()
         {
-            if (CMB_Culture.SelectedItem is CultureItem selectedCulture)
+            if (SelectedCultureItem != null)
+            {
+                int id = SelectedCultureItem.Id;
+                string name = SelectedCultureItem.Name;
+            }
+        }
+
+        private void Climate_control()
+        {
+            if (SelectedCultureItem != null)
             {
                 ClimateControlEditor editWindow = new ClimateControlEditor();
 
@@ -74,7 +97,7 @@ namespace Ukrainian_greenhouse
 
                         using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                         {
-                            cmd.Parameters.AddWithValue("@listId", selectedCulture.Id);
+                            cmd.Parameters.AddWithValue("@listId", SelectedCultureItem.Id);
                             cmd.Parameters.AddWithValue("@timestamp", editWindow.Timestamp);
                             cmd.Parameters.AddWithValue("@temperature", editWindow.Temperature);
                             cmd.Parameters.AddWithValue("@humidity", editWindow.Humidity);

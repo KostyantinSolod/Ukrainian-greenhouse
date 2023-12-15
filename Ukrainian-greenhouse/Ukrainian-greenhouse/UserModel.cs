@@ -20,8 +20,8 @@ namespace Ukrainian_greenhouse
             }
         }
 
-        private PasswordBox _password;
-        public PasswordBox Password
+        private string _password;
+        public string Password
         {
             get { return _password; }
             set

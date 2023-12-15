@@ -4,8 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
-        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:Ukrainian_greenhouse.ViewModels"
         Title="Control" Height="450" Width="400">
+    <Window.DataContext>
+        <vm:ControlViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
@@ -65,7 +68,10 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="CMB_Culture" FontSize="17"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" SelectionChanged="ComboBox_SelectionChanged" />
+        <ComboBox x:Name="CMB_Culture"  FontSize="17"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" SelectionChanged="ComboBox_SelectionChanged" 
+                  ItemsSource="{Binding CmbBoxItems}" 
+                  DisplayMemberPath="Name"
+                  SelectedItem="{Binding SelectedCultureItem}"/>
 
         <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}" Click="Climate_control_Click">
             <TextBlock TextAlignment="Center">Управління<LineBreak/>кліматом</TextBlock>

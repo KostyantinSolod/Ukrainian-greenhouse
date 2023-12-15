@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,7 +19,6 @@ namespace Ukrainian_greenhouse.ViewModels
             connection = new NpgsqlConnection(connectionString);
         }
         
-        
         public UserModel User => _userModel;
 
         private ICommand _loginCommand;
@@ -27,8 +27,7 @@ namespace Ukrainian_greenhouse.ViewModels
             get
             {
                 return _loginCommand ?? (_loginCommand = new RelayCommand(
-                    param => Login(),
-                    param => !string.IsNullOrEmpty(User.Login) && User.Password != null
+                    param => Login()
                 ));
             }
         }
@@ -42,8 +41,8 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
-        private PasswordBox _password;
-        public PasswordBox Password
+        private string _password;
+        public string Password
         {
             get { return _password; }
             set
@@ -63,13 +62,14 @@ namespace Ukrainian_greenhouse.ViewModels
                 Control window = new Control();
                 window.DataContext = viewModel;
                 window.Show();
+                Application.Current.MainWindow.Close();
             }
             else
             {
                 MessageBox.Show("Неправильний логін або пароль!");
             }
         }
-        private bool ValidateUser(string login, PasswordBox password)
+        private bool ValidateUser(string login, string password)
         {
             bool isValid = false;
             
@@ -81,14 +81,19 @@ namespace Ukrainian_greenhouse.ViewModels
                     string query = "SELECT COUNT(*) FROM users WHERE login = @Login AND password = @Password";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("Login", login);
-                        cmd.Parameters.AddWithValue("Password", password);
-                        isValid = (long)cmd.ExecuteScalar() > 0;
+                        cmd.Parameters.Add(new NpgsqlParameter("Login", NpgsqlTypes.NpgsqlDbType.Text));
+                        cmd.Parameters["Login"].Value = login;
+                        cmd.Parameters.Add(new NpgsqlParameter("Password", NpgsqlTypes.NpgsqlDbType.Text));
+                        cmd.Parameters["Password"].Value = password;
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        // Перевірте, чи є користувач з введеним логіном і паролем
+                        isValid = count > 0;
                     }
                 }
                 catch (NpgsqlException ex)
                 {
-                    // Обработка ошибки подключения или запроса
+                    
                 }
             }
             return isValid;
