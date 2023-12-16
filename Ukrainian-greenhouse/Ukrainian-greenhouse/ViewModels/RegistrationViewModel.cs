@@ -82,7 +82,6 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Login_Click()
         {
-
             Application.Current.MainWindow.Show();
             if (_registrationWindow != null)
             {

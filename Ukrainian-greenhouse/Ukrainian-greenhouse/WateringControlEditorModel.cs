@@ -4,49 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using System.Windows;
 using Ukrainian_greenhouse.Views;
 
 namespace Ukrainian_greenhouse.ViewModels
 {
-    class ClimateControlEditorModel: BaseViewModel
+    class WateringControlEditorModel : BaseViewModel
     {
         string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
         public DateTime Timestamp { get; private set; }
-        
-        private Control _ControlWindow;
-        public Control ControlWindow
-        {
-            get => _ControlWindow;
-            set
-            {
-                _ControlWindow = value;
-                OnPropertyChanged(nameof(ControlWindow));
-            }
-        }
-
-        private double _temperature;
-        public double Temperature
-        {
-            get => _temperature;
-            set
-            {
-                _temperature = value;
-                OnPropertyChanged(nameof(Temperature));
-            }
-        }
-        private double _humidity;
-        public double Humidity
-        {
-            get => _humidity;
-            set
-            {
-                _humidity = value;
-                OnPropertyChanged(nameof(Humidity));
-            }
-        }
         private ICommand _saveCommand;
         public ICommand SaveCommand
         {
@@ -57,6 +25,27 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
+        private Control _ControlWindow;
+        public Control ControlWindow
+        {
+            get => _ControlWindow;
+            set
+            {
+                _ControlWindow = value;
+                OnPropertyChanged(nameof(ControlWindow));
+            }
+        }
+        
+        private double _irrigation_volume;
+        public double IrrigationVolume
+        {
+            get => _irrigation_volume;
+            set
+            {
+                _irrigation_volume = value;
+                OnPropertyChanged(nameof(IrrigationVolume));
+            }
+        }
         //private readonly int _listId; // Додайте поле для зберігання list_id
 
         //public ClimateControlEditorModel(int listId)
@@ -65,22 +54,21 @@ namespace Ukrainian_greenhouse.ViewModels
         //}
         private void SaveClick()
         {
-            
+
             try
             {
                 using (connection = new NpgsqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    string insertQuery = "INSERT INTO climate_control (list_id, timestamp, temperature, humidity) " +
-                                         "VALUES (@listId, @timestamp, @temperature, @humidity)";
+                    string insertQuery = "INSERT INTO watering_schedule (list_id, irrigation_time, irrigation_volume ) " +
+                                         "VALUES (@listId, @irrigation_time, @irrigation_volume)";
 
                     using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                     {
-                        cmd.Parameters.AddWithValue("@listId", 3) ;
-                        cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@temperature", _temperature);
-                        cmd.Parameters.AddWithValue("@humidity", _humidity);
+                        cmd.Parameters.AddWithValue("@listId", 1);
+                        cmd.Parameters.AddWithValue("@irrigation_time", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@irrigation_volume", _irrigation_volume);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -92,6 +80,5 @@ namespace Ukrainian_greenhouse.ViewModels
                 MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 }

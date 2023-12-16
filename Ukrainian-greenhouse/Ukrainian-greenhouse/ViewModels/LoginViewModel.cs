@@ -53,20 +53,27 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Login()
         {
-            bool isValidUser = ValidateUser(User.Login, User.Password);
-
-            if (isValidUser)
+            if (User.Login != null && User.Password != null)
             {
+                bool isValidUser = ValidateUser(User.Login, User.Password);
 
-                ControlViewModel viewModel = new ControlViewModel();
-                Views.Control window = new Views.Control();
-                window.DataContext = viewModel;
-                window.Show();
-                Application.Current.MainWindow.Close();
+                if (isValidUser)
+                {
+
+                    ControlViewModel viewModel = new ControlViewModel();
+                    Views.Control window = new Views.Control();
+                    window.DataContext = viewModel;
+                    window.Show();
+                    Application.Current.MainWindow.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Неправильний логін або пароль!");
+                }
             }
             else
             {
-                MessageBox.Show("Неправильний логін або пароль!");
+                MessageBox.Show("Не всі поля заповнені");
             }
         }
         private bool ValidateUser(string login, string password)
@@ -87,7 +94,6 @@ namespace Ukrainian_greenhouse.ViewModels
                         cmd.Parameters["Password"].Value = password;
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
 
-                        // Перевірте, чи є користувач з введеним логіном і паролем
                         isValid = count > 0;
                     }
                 }

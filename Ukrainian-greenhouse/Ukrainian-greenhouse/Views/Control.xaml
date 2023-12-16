@@ -77,11 +77,11 @@
             <TextBlock TextAlignment="Center">Управління<LineBreak/>кліматом</TextBlock>
         </Button>
 
-        <Button x:Name="Energy_management" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
+        <Button x:Name="Energy_management" Command="{Binding EnergyManagement}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
             <TextBlock TextAlignment="Center">Управління<LineBreak/>електрикою</TextBlock>
         </Button>
 
-        <Button x:Name="Watering_schedule" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
+        <Button x:Name="Watering_schedule" Command="{Binding WaterControl}" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
             <TextBlock TextAlignment="Center">Управління<LineBreak/>поливом</TextBlock>
         </Button>
 
@@ -89,7 +89,7 @@
             <TextBlock TextAlignment="Center">Мониіторинг<LineBreak/>даних</TextBlock>
         </Button>
 
-        <Button x:Name="add_delete" Grid.Row="1" Grid.Column="8" Style="{StaticResource LightweightButton}">
+        <Button x:Name="add_delete" Command="{Binding Edit}" Grid.Row="1" Grid.Column="8" Style="{StaticResource LightweightButton}">
             <Image Source="D:\GREENHOUSE\Ukrainian-greenhouse\Ukrainian-greenhouse\Ukrainian-greenhouse\Resources/icons8-карандаш-50.png" Stretch="Fill" Margin="0,2,0,2"/>
         </Button>
 

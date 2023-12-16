@@ -15,14 +15,12 @@ using Ukrainian_greenhouse.ViewModels;
 
 namespace Ukrainian_greenhouse.Views
 {
-    public partial class ClimateControlEditor : Window
+    public partial class EnergyControlEditor : Window
     {
-        public ClimateControlEditor()
+        public EnergyControlEditor()
         {
             InitializeComponent();
-            ClimateControlEditorModel viewModel = new ClimateControlEditorModel();
-            DataContext = viewModel;
-            
+            DataContext = new EnergyControlEditorModel();
         }
     }
 }

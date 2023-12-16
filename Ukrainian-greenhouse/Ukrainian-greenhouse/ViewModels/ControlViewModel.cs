@@ -9,7 +9,7 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class ControlViewModel : BaseViewModel
     {
-        public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
+        public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
 
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
@@ -20,7 +20,27 @@ namespace Ukrainian_greenhouse.ViewModels
             get
             {
                 return _climateControl ?? (_climateControl = new RelayCommand(
-                    param => Climate_control()
+                    param => Climate_Control()
+                ));
+            }
+        }
+        private ICommand _waterControl;
+        public ICommand WaterControl
+        {
+            get
+            {
+                return _waterControl ?? (_waterControl = new RelayCommand(
+                    param => Watering_Schedule()
+                ));
+            }
+        }
+        private ICommand _energyManagement;
+        public ICommand EnergyManagement
+        {
+            get
+            {
+                return _energyManagement ?? (_energyManagement = new RelayCommand(
+                    param => Energy_Management()
                 ));
             }
         }
@@ -32,6 +52,16 @@ namespace Ukrainian_greenhouse.ViewModels
                 return _selectItem ?? (_selectItem = new RelayCommand(
                     param => LoadData()
                     
+                ));
+            }
+        }
+        private ICommand _edit;
+        public ICommand Edit
+        {
+            get
+            {
+                return _edit ?? (_edit = new RelayCommand(
+                    param => Edit_Data()
                 ));
             }
         }
@@ -94,14 +124,18 @@ namespace Ukrainian_greenhouse.ViewModels
                 string name = SelectedCultureItem.Name;
             }
         }
-
-        private void Climate_control()
+        private void Edit_Data()
+        {
+            EditCmb editCmb = new EditCmb();
+            editCmb.Show();
+        }
+        private void Climate_Control()
         {
             if (SelectedCultureItem != null)
             {
-                int ListId = SelectedCultureItem.Id; // Припустимо, що list_id доступний через властивість Id
+                int listId = SelectedCultureItem.Id; // Припустимо, що list_id доступний через властивість Id
 
-                ClimateControlEditor climateControlEditor = new ClimateControlEditor(ListId);
+                ClimateControlEditor climateControlEditor = new ClimateControlEditor();
                 climateControlEditor.Show();
             }
             else
@@ -109,6 +143,33 @@ namespace Ukrainian_greenhouse.ViewModels
                 MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Watering_Schedule()
+        {
+            if (SelectedCultureItem != null)
+            {
+                int listId = SelectedCultureItem.Id;
 
+                WateringControlEditor wateringControlEditor = new WateringControlEditor();
+                wateringControlEditor.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Energy_Management()
+        {
+            if (SelectedCultureItem != null)
+            {
+                int listId = SelectedCultureItem.Id;
+
+                EnergyControlEditor energyControlEditor = new EnergyControlEditor();
+                energyControlEditor.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

@@ -8,6 +8,9 @@
     <Window.DataContext>
         <vm:LoginViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
+    </Window.InputBindings>
     <Window.Resources>
             <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
                 <Setter Property="Foreground" Value="White"/>
@@ -75,6 +78,7 @@
         <Button Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3"  Content="Регістрація" FontSize="24" 
         Command="{Binding RegistrationCommand}" 
         Style="{StaticResource RoundedButtonStylee}" ></Button>
+        
     </Grid>
 </Window>
 
