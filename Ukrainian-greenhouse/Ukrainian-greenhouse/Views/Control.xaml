@@ -1,4 +1,4 @@
-﻿<Window x:Class="Ukrainian_greenhouse.Control"
+﻿<Window x:Class="Ukrainian_greenhouse.Views.Control"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -68,12 +68,12 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="CMB_Culture"  FontSize="17"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" SelectionChanged="ComboBox_SelectionChanged" 
-                  ItemsSource="{Binding CmbBoxItems}" 
-                  DisplayMemberPath="Name"
-                  SelectedItem="{Binding SelectedCultureItem}"/>
-
-        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Style="{StaticResource  RoundedButtonStylee}">
+        <ComboBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5"
+          ItemsSource="{Binding CmbBoxItems}"
+          DisplayMemberPath="Name"
+          SelectedItem="{Binding SelectedCultureItem}"
+          />
+        <Button x:Name="Climate_control" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="3" Command="{Binding ClimateControl}" Style="{StaticResource  RoundedButtonStylee}">
             <TextBlock TextAlignment="Center">Управління<LineBreak/>кліматом</TextBlock>
         </Button>
 

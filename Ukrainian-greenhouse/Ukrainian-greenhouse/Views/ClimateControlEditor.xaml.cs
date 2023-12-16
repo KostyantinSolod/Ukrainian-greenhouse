@@ -13,16 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Ukrainian_greenhouse.ViewModels;
 
-namespace Ukrainian_greenhouse
+namespace Ukrainian_greenhouse.Views
 {
     public partial class ClimateControlEditor : Window
     {
-        public ClimateControlEditor()
+        public ClimateControlEditor(long listId)
         {
             InitializeComponent();
 
-            DataContext = new ClimateControlEditorModel();
+            // Однак, пам'ятайте перевірити на null у випадку необхідності.
+            if (listId != null)
+            {
+                ClimateControlEditorModel viewModel = new ClimateControlEditorModel(listId);
+                DataContext = viewModel;
+            }
+            else
+            {
+                // Обробка випадку, якщо listId - null.
+                MessageBox.Show("List_id is null!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close(); // Закрити вікно в такому випадку, якщо щось пішло не так.
+            }
         }
-       
     }
 }

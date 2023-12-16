@@ -59,7 +59,7 @@ namespace Ukrainian_greenhouse.ViewModels
             {
 
                 ControlViewModel viewModel = new ControlViewModel();
-                Control window = new Control();
+                Views.Control window = new Views.Control();
                 window.DataContext = viewModel;
                 window.Show();
                 Application.Current.MainWindow.Close();

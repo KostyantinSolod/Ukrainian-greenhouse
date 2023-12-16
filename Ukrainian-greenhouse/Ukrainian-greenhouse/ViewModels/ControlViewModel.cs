@@ -5,11 +5,11 @@ using System.Windows;
 using System.Windows.Input;
 using Ukrainian_greenhouse.Views;
 
-namespace Ukrainian_greenhouse
+namespace Ukrainian_greenhouse.ViewModels
 {
-    public class ControlViewModel : BaseViewModel
+    class ControlViewModel : BaseViewModel
     {
-        public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=control";
+        public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         private NpgsqlConnection connection;
 
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
@@ -23,6 +23,21 @@ namespace Ukrainian_greenhouse
                     param => Climate_control()
                 ));
             }
+        }
+        private ICommand _selectItem;
+        public ICommand SelectItem
+        {
+            get
+            {
+                return _selectItem ?? (_selectItem = new RelayCommand(
+                    param => LoadData()
+                    
+                ));
+            }
+        }
+        public ControlViewModel()
+        {
+            LoadData(); 
         }
 
         private CultureItem _selectedCultureItem;
@@ -84,34 +99,16 @@ namespace Ukrainian_greenhouse
         {
             if (SelectedCultureItem != null)
             {
-                ClimateControlEditorModel editWindow = new ClimateControlEditorModel();
+                int ListId = SelectedCultureItem.Id; // Припустимо, що list_id доступний через властивість Id
 
-                if (editWindow.ShowDialog() == true)
-                {
-                    using (connection = new NpgsqlConnection(connectionString))
-                    {
-                        connection.Open();
-
-                        string insertQuery = "INSERT INTO climate_control (list_id, timestamp, temperature, humidity) " +
-                                             "VALUES (@listId, @timestamp, @temperature, @humidity)";
-
-                        using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
-                        {
-                            cmd.Parameters.AddWithValue("@listId", SelectedCultureItem.Id);
-                            cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@temperature", editWindow.Temperature);
-                            cmd.Parameters.AddWithValue("@humidity", editWindow.Humidity);
-
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-                    MessageBox.Show("Climate control data added successfully!");
-                }
+                ClimateControlEditor climateControlEditor = new ClimateControlEditor(ListId);
+                climateControlEditor.Show();
             }
             else
             {
                 MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

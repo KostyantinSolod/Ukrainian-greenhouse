@@ -8,11 +8,11 @@ using System.Windows;
 using System.Windows.Input;
 using Ukrainian_greenhouse.Views;
 
-namespace Ukrainian_greenhouse
+namespace Ukrainian_greenhouse.ViewModels
 {
-    public class ClimateControlEditorModel: BaseViewModel
+    class ClimateControlEditorModel: BaseViewModel
     {
-        public string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=control";
+        string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         private NpgsqlConnection connection;
         public DateTime Timestamp { get; private set; }
         private double _temperature;
@@ -27,6 +27,7 @@ namespace Ukrainian_greenhouse
                 OnPropertyChanged(nameof(ControlWindow));
             }
         }
+        
         public double Temperature
         {
             get => _temperature;
@@ -47,31 +48,60 @@ namespace Ukrainian_greenhouse
             }
         }
         private ICommand _saveCommand;
-        //public ICommand SaveCommand
-        //{
-        //    get
-        //    {
-        //        return _saveCommand ?? (_saveCommand = new RelayCommand(
-        //            param => Con()
-        //        ));
-        //    }
-        //}
-        private void Save_Click(object sender, RoutedEventArgs e)
+        public ICommand SaveCommand
         {
+            get
+            {
+                return _saveCommand ?? (_saveCommand = new RelayCommand(
+                    param => SaveClick()
+                ));
+            }
+        }
+        private int _selectedCultureItemId;
+        public int SelectedCultureItemId
+        {
+            get => _selectedCultureItemId;
+            set
+            {
+                _selectedCultureItemId = value;
+                OnPropertyChanged(nameof(SelectedCultureItemId));
+            }
+        }
+        private long _listId;
+
+        public ClimateControlEditorModel(long listId)
+        {
+            _listId = listId;
+        }
+        private void SaveClick()
+        {
+            
             try
             {
-                Temperature = _temperature;
-                Humidity = _humidity;
-                Application.Current.MainWindow.Show();
-                if (_ControlWindow != null)
+                using (connection = new NpgsqlConnection(connectionString))
                 {
-                    _ControlWindow.Close();
+                    connection.Open();
+
+                    string insertQuery = "INSERT INTO climate_control (list_id, timestamp, temperature, humidity) " +
+                                         "VALUES (@listId, @timestamp, @temperature, @humidity)";
+
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@listId", _listId) ;
+                        cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@temperature", Temperature);
+                        cmd.Parameters.AddWithValue("@humidity", Humidity);
+
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+                MessageBox.Show("Climate control data added successfully!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

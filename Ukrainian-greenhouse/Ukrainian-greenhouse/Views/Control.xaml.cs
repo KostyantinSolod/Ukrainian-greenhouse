@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.Data;
 using Ukrainian_greenhouse.ViewModels;
 
-namespace Ukrainian_greenhouse
+namespace Ukrainian_greenhouse.Views
 {
     public partial class Control : Window
     {
