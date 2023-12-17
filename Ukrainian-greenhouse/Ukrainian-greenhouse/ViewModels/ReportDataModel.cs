@@ -1,13 +1,14 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Ukrainian_greenhouse.Views;
 
 namespace Ukrainian_greenhouse.ViewModels
 {
-    class ReportDataModel : BaseViewModel
+    class ReportDataModel : BaseViewModel, INotifyPropertyChanged
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
@@ -18,9 +19,9 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             connection = new NpgsqlConnection(connectionString);
             SelectData();
-            LoadData();
             InsertData();
-            Greenhouse_Monitoring();
+            LoadData();
+            GreenHouse_Monitoring();
         }
         
         private ICommand _selectItem;
@@ -45,11 +46,11 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void ComboBox_SelectionChanged()
         {
-            //if (SelectedCultureItem != null)
-            //{
-            //    DateTime reportTime = SelectedCultureItem._timestampReport;
-            //    _timestampReport = reportTime;
-            //}
+            if (SelectedCultureItem != null)
+            {
+                DateTime reportTime = SelectedCultureItem._timestampReport;
+                _timestampReport = reportTime;
+            }
         }
         private CultureItem _selectedCultureItem;
         public CultureItem SelectedCultureItem
@@ -81,15 +82,15 @@ namespace Ukrainian_greenhouse.ViewModels
                 using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT timestamp_report FROM greenhouse_monitoring", connection))
                 using (NpgsqlDataReader reader = cmd.ExecuteReader())
                 {
-                    //while (reader.Read())
-                    //{
-                    //    CultureItem cultureItem = new CultureItem
-                    //    {
-                    //        _timestampReport = reader.GetDateTime(0)
-                    //    };
+                    while (reader.Read())
+                    {
+                        CultureItem cultureItem = new CultureItem
+                        {
+                            _timestampReport = reader.GetDateTime(0)
+                        };
 
-                    //    CmbBoxItems.Add(cultureItem);
-                    //}
+                        CmbBoxItems.Add(cultureItem);
+                    }
                 }
             }
         }
@@ -222,7 +223,7 @@ namespace Ukrainian_greenhouse.ViewModels
                 MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void Greenhouse_Monitoring()
+        private void GreenHouse_Monitoring()
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
