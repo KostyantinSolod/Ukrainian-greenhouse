@@ -23,7 +23,7 @@
                         BorderBrush="Black" 
                         BorderThickness="{TemplateBinding BorderThickness}" 
                         CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -64,20 +64,22 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        
+
         <Grid.Background>
             <ImageBrush ImageSource="Resources/teplitsa.jpg"/>
         </Grid.Background>
 
-        <Button Command="{Binding ReportData}" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3"
+        <Button Command="{Binding ReportData}"  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3"
                 Style="{StaticResource RoundedButtonStylee}">
-            <TextBlock FontSize="25" TextAlignment="Center">Звіт</TextBlock>
+            <TextBlock FontSize="25">Звіт</TextBlock>
         </Button>
+        <Image Grid.Column="1" Grid.Row="3" Source="/Views/Resources/icons8-табель-успеваемости-100.png" Grid.ColumnSpan="3" Margin="43,24,43,23" Grid.RowSpan="3" />
 
-        <Button Command="{Binding DiagramData}" Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3"
-                Style="{StaticResource RoundedButtonStylee}">
-            <TextBlock FontSize="20" TextAlignment="Center">Переглянути<LineBreak/>діаграми</TextBlock>
+
+        <Button Command="{Binding DiagramData}" Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" Style="{StaticResource RoundedButtonStylee}">
+            <TextBlock FontSize="25" TextAlignment="Center">Діаграми</TextBlock>
         </Button>
-            
+        <Image Grid.Column="5" Grid.Row="3"  Source="/Views/Resources/icons8-график-100.png" Stretch="Fill" Grid.ColumnSpan="3" Margin="41,28,41,28" Grid.RowSpan="3" />
+
     </Grid>
 </Window>

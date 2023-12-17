@@ -1,9 +1,7 @@
 CREATE TABLE Users(
 	id SERIAL PRIMARY KEY,
 	login TEXT NOT NULL,
-	email TEXT NOT NULL,
 	password TEXT NOT NULL,
-	role INTEGER NOT NULL
 );
 create table climate_control (
     id SERIAL PRIMARY KEY,
