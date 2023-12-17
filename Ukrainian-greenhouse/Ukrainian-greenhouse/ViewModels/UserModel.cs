@@ -2,7 +2,7 @@
 using System.Security;
 using System.Windows.Controls;
 
-namespace Ukrainian_greenhouse
+namespace Ukrainian_greenhouse.ViewModels
 {
     public class UserModel : INotifyPropertyChanged
     {

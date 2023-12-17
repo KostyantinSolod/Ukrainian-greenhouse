@@ -6,14 +6,77 @@
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         xmlns:vm="clr-namespace:Ukrainian_greenhouse.ViewModels"
         mc:Ignorable="d"
-        Title="WateringControlEditor" Height="450" Width="800">
+        Title="WateringControlEditor" Height="450" Width="400">
     <Window.DataContext>
         <vm:WateringControlEditorModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="MyTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+        <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="MediumSeaGreen" 
+BorderBrush="Black" 
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MyTextStyle1" TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Button x:Name="Save" Content="Save" Command="{Binding SaveCommand}" Margin="320,320,273,26"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/teplitsa.jpg" />
+        </Grid.Background>
 
-        <TextBox x:Name="addWater" Text="{Binding IrrigationVolume}" Margin="309,126,262,263" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            
+            
+        </Grid.RowDefinitions>
+        <Button x:Name="Save" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="3"
+                Content="Save" Command="{Binding SaveCommand}" 
+                Style="{StaticResource RoundedButtonStylee}"/>
+
+
+        <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"
+                   HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" FontSize="16">
+            Введіть<LineBreak/>об'єм поливу(л):
+        </TextBlock>
+
+        <TextBox x:Name="addWater" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3"
+                 FontSize="17"
+                 Text="{Binding IrrigationVolume}"
+                 VerticalContentAlignment="Center"
+                 Style="{StaticResource MyTextStyle1}"/>
 
     </Grid>
 </Window>

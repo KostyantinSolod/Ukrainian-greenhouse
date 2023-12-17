@@ -84,6 +84,40 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
+        private bool IsCultureExist()
+        {
+            connection = new NpgsqlConnection(connectionString);
+            bool exist = false;
+
+            try
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM list WHERE name_of_culture = @name_of_culture";
+
+                using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("name_of_culture", NpgsqlTypes.NpgsqlDbType.Text));
+                    cmd.Parameters["name_of_culture"].Value = _nameOfCulture;
+
+                    // Execute the query and get the result
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    // Check if the count is greater than 0, indicating the culture exists
+                    exist = count > 0;
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                Console.WriteLine("Помилка перевірки логіна: " + ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return exist;
+        }
+
         private void DeleteData()
         {
             connection = new NpgsqlConnection(connectionString);
@@ -94,8 +128,8 @@ namespace Ukrainian_greenhouse.ViewModels
                 if (SelectedCultureItem != null)
                 {
                     int id = SelectedCultureItem.Id;
-
                     string tableName = SelectedCultureItem.Name;
+
                     string deleteClimat = $"DELETE FROM climate_control WHERE list_id = {id}";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(deleteClimat, connection))
                     {
@@ -106,12 +140,21 @@ namespace Ukrainian_greenhouse.ViewModels
                     {
                         cmd.ExecuteNonQuery();
                     }
+                    string deleteMonitoring = $"DELETE FROM greenhouse_monitoring WHERE list_id = {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(deleteMonitoring, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    string deleteEnergy = $"DELETE FROM energy_management WHERE list_id = {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(deleteEnergy, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
                     string deleteCommand = $"DELETE FROM list WHERE list_id = {id}";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(deleteCommand, connection))
                     {
                         cmd.ExecuteNonQuery();
                     }
-
                     string updateCommand = $"UPDATE list SET list_id = list_id - 1 WHERE list_id > @id";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(updateCommand, connection))
                     {
@@ -135,34 +178,40 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void AddData()
         {
-            connection = new NpgsqlConnection(connectionString);
-            try
+            if (!IsCultureExist())
             {
-                connection.Open();
-
-                int rowCount = GetRowCount();
-
-                string query = "INSERT INTO list (list_id, name_of_culture) VALUES (@list_id, @name_of_culture)";
-                using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+                connection = new NpgsqlConnection(connectionString);
+                try
                 {
-                    cmd.Parameters.AddWithValue("@list_id", rowCount + 1);
-                    cmd.Parameters.AddWithValue("@name_of_culture", _nameOfCulture);
+                    connection.Open();
 
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Успішно!");
+                    int rowCount = GetRowCount();
+
+                    string query = "INSERT INTO list (list_id, name_of_culture) VALUES (@list_id, @name_of_culture)";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@list_id", rowCount + 1);
+                        cmd.Parameters.AddWithValue("@name_of_culture", _nameOfCulture);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Успішно!");
+                    }
+                    Edit_Click();
                 }
-                Edit_Click();
+                catch (NpgsqlException ex)
+                {
+                    Console.WriteLine("Помилка: " + ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
-            catch (NpgsqlException ex)
+            else
             {
-                Console.WriteLine("Помилка: " + ex.Message);
-            }
-            finally
-            {
-                connection.Close();
+                MessageBox.Show("У вас вже є такий вид культури!");
             }
         }
-
         private int GetRowCount()
         {
             using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT COUNT(*) FROM list", connection))

@@ -51,7 +51,6 @@ namespace Ukrainian_greenhouse.ViewModels
             {
                 return _selectItem ?? (_selectItem = new RelayCommand(
                     param => LoadData()
-                    
                 ));
             }
         }
@@ -65,9 +64,19 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
+        private ICommand _monitoringData;
+        public ICommand MonitoringData
+        {
+            get
+            {
+                return _monitoringData ?? (_monitoringData = new RelayCommand(
+                    param => Monitoring_Data()
+                ));
+            }
+        }
         public ControlViewModel()
         {
-            LoadData(); 
+            LoadData();
         }
 
         private CultureItem _selectedCultureItem;
@@ -82,6 +91,23 @@ namespace Ukrainian_greenhouse.ViewModels
             }
         }
 
+        //private async void FillComboBoxAsync()
+        //{
+        //    finters.Items.Clear();
+        //    if (tablesComboBox.SelectedItem != null)
+        //    {
+        //        NpgsqlConnection conn = new NpgsqlConnection(sql);
+        //        await conn.OpenAsync(); // асинхронне відкриття з'єднання
+        //        string query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tablesComboBox.Text + "'";
+        //        NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
+        //        NpgsqlDataReader reader = await cmd.ExecuteReaderAsync(); // асинхронне виконання запиту
+        //        while (await reader.ReadAsync()) // асинхронне читання результатів
+        //        {
+        //            string columnName = reader.GetString(0);
+        //            finters.Items.Add(columnName);
+        //        }
+        //    }
+        //}
         private void LoadData()
         {
             using (connection = new NpgsqlConnection(connectionString))
@@ -98,7 +124,6 @@ namespace Ukrainian_greenhouse.ViewModels
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1)
                         };
-
                         CmbBoxItems.Add(cultureItem);
                     }
                 }
@@ -133,7 +158,7 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             if (SelectedCultureItem != null)
             {
-                int listId = SelectedCultureItem.Id; // Припустимо, що list_id доступний через властивість Id
+                int listId = SelectedCultureItem.Id;
 
                 ClimateControlEditor climateControlEditor = new ClimateControlEditor();
                 climateControlEditor.Show();
@@ -165,6 +190,20 @@ namespace Ukrainian_greenhouse.ViewModels
 
                 EnergyControlEditor energyControlEditor = new EnergyControlEditor();
                 energyControlEditor.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Monitoring_Data()
+        {
+            if (SelectedCultureItem != null)
+            {
+                int listId = SelectedCultureItem.Id;
+
+                MonitoringData monitoringData = new MonitoringData();
+                monitoringData.Show();
             }
             else
             {

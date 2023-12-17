@@ -54,30 +54,36 @@ namespace Ukrainian_greenhouse.ViewModels
         //}
         private void SaveClick()
         {
-
-            try
+            if (_irrigation_volume > 0)
             {
-                using (connection = new NpgsqlConnection(connectionString))
+                try
                 {
-                    connection.Open();
-
-                    string insertQuery = "INSERT INTO watering_schedule (list_id, irrigation_time, irrigation_volume ) " +
-                                         "VALUES (@listId, @irrigation_time, @irrigation_volume)";
-
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                    using (connection = new NpgsqlConnection(connectionString))
                     {
-                        cmd.Parameters.AddWithValue("@listId", 1);
-                        cmd.Parameters.AddWithValue("@irrigation_time", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@irrigation_volume", _irrigation_volume);
+                        connection.Open();
 
-                        cmd.ExecuteNonQuery();
+                        string insertQuery = "INSERT INTO watering_schedule (list_id, irrigation_time, irrigation_volume ) " +
+                                             "VALUES (@listId, @irrigation_time, @irrigation_volume)";
+
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@listId", 2);
+                            cmd.Parameters.AddWithValue("@irrigation_time", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@irrigation_volume", _irrigation_volume);
+
+                            cmd.ExecuteNonQuery();
+                        }
                     }
+                    MessageBox.Show("Climate control data added successfully!");
                 }
-                MessageBox.Show("Climate control data added successfully!");
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введіть коректрні дані!");
             }
         }
     }

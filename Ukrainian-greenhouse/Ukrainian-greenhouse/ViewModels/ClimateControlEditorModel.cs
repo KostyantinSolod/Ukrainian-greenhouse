@@ -65,31 +65,37 @@ namespace Ukrainian_greenhouse.ViewModels
         //}
         private void SaveClick()
         {
-            
-            try
+            if (_temperature > 0 && _humidity > 0)
             {
-                using (connection = new NpgsqlConnection(connectionString))
+                try
                 {
-                    connection.Open();
-
-                    string insertQuery = "INSERT INTO climate_control (list_id, timestamp, temperature, humidity) " +
-                                         "VALUES (@listId, @timestamp, @temperature, @humidity)";
-
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                    using (connection = new NpgsqlConnection(connectionString))
                     {
-                        cmd.Parameters.AddWithValue("@listId", 3) ;
-                        cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
-                        cmd.Parameters.AddWithValue("@temperature", _temperature);
-                        cmd.Parameters.AddWithValue("@humidity", _humidity);
+                        connection.Open();
 
-                        cmd.ExecuteNonQuery();
+                        string insertQuery = "INSERT INTO climate_control (list_id, timestamp, temperature, humidity) " +
+                                             "VALUES (@listId, @timestamp, @temperature, @humidity)";
+
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@listId", 2);
+                            cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@temperature", _temperature);
+                            cmd.Parameters.AddWithValue("@humidity", _humidity);
+
+                            cmd.ExecuteNonQuery();
+                        }
                     }
+                    MessageBox.Show("Climate control data added successfully!");
                 }
-                MessageBox.Show("Climate control data added successfully!");
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введіть коректрні дані!");
             }
         }
 

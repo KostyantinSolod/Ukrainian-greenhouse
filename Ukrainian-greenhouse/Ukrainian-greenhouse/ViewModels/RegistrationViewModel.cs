@@ -11,7 +11,6 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         private static string connectionString = "Host = localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         public NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-        private string _login;
 
         private Registration _registrationWindow;
         public Registration RegistrationWindow
@@ -23,6 +22,7 @@ namespace Ukrainian_greenhouse.ViewModels
                 OnPropertyChanged(nameof(RegistrationWindow));
             }
         }
+        private string _login;
         public string Login
         {
             get => _login;
@@ -61,7 +61,7 @@ namespace Ukrainian_greenhouse.ViewModels
             get
             {
                 return _registerCommand ?? (_registerCommand = new RelayCommand(
-                    param => Register()                    
+                    param => Register()
                 ));
             }
         }
@@ -82,7 +82,8 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Login_Click()
         {
-            Application.Current.MainWindow.Show();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             if (_registrationWindow != null)
             {
                 _registrationWindow.Close();
@@ -90,34 +91,41 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Register()
         {
-            string password = Password;
-            if (CanRegister())
+            if (_login != null && _password != null && _confirmPassword != null)
             {
-                if (IsLoginExist(Login))
+                string password = Password;
+                if (CanRegister())
                 {
-                    MessageBox.Show("Логін вже існує");
-                }
-                else
-                {
-                    if (_password== _confirmPassword)
+                    if (IsLoginExist())
                     {
-                        RegisterNewUser(_login, _password);
-                        MainWindow mainWindow = new MainWindow();
-                        mainWindow.Show();
+                        MessageBox.Show("Логін вже існує");
                     }
                     else
                     {
-                        MessageBox.Show("Вказаний пароль відрізняється від нового пароля");
+                        if (_password == _confirmPassword)
+                        {
+                            RegisterNewUser();
+                            Application.Current.MainWindow.Show();
+                            _registrationWindow.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Вказаний пароль відрізняється від нового пароля");
+                        }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Всі поля не заповнені!");
                 }
             }
             else
             {
-                MessageBox.Show("Всі поля не заповнені!");
+                MessageBox.Show("Не всі поля заповнені");
             }
         }
 
-        private bool IsLoginExist(string login)
+        private bool IsLoginExist()
         {
             bool exist = false;
             try
@@ -127,7 +135,7 @@ namespace Ukrainian_greenhouse.ViewModels
                 using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
                 {
                     cmd.Parameters.Add(new NpgsqlParameter("Login", NpgsqlTypes.NpgsqlDbType.Text));
-                    cmd.Parameters["Login"].Value = login;
+                    cmd.Parameters["Login"].Value = _login;
                 }
             }
             catch (NpgsqlException ex)
@@ -141,7 +149,7 @@ namespace Ukrainian_greenhouse.ViewModels
             return exist;
         }
 
-        private void RegisterNewUser(string login, string password)
+        private void RegisterNewUser()
         {
             try
             {
@@ -149,8 +157,8 @@ namespace Ukrainian_greenhouse.ViewModels
                 string query = "INSERT INTO users (login, password) VALUES (@Login, @Password)";
                 using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
                 {
-                    cmd.Parameters.AddWithValue("@Login", login);
-                    cmd.Parameters.AddWithValue("@Password", password);
+                    cmd.Parameters.AddWithValue("@Login", _login);
+                    cmd.Parameters.AddWithValue("@Password", _password);
 
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Реєстрація успішна!");
@@ -165,9 +173,5 @@ namespace Ukrainian_greenhouse.ViewModels
                 connection.Close();
             }
         }
-
-
-
-
     }
 }

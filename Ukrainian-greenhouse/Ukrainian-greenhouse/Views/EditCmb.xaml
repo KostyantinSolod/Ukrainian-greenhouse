@@ -6,19 +6,86 @@
         xmlns:vm="clr-namespace:Ukrainian_greenhouse.ViewModels"
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         mc:Ignorable="d"
-        Title="EditCmb" Height="450" Width="800">
+        Title="EditCmb" Height="350" Width="500">
     <Window.DataContext>
         <vm:EditCmbViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="MyTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+        <Style x:Key="RoundedButtonStylee" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="MediumSeaGreen" 
+BorderBrush="Black" 
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MyTextStyle1" TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid>
-            <ComboBox ItemsSource="{Binding CmbBoxItems}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCultureItem}" Margin="464,20,58,292" />
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/teplitsa.jpg" />
+        </Grid.Background>
 
-            <Button Content="Add" Command="{Binding AddCulture}" Margin="95,156,505,166" />
-            <TextBox x:Name="AddCulture" Text="{Binding NameOfCulture, UpdateSourceTrigger=PropertyChanged}" Margin="90,47,505,292"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
 
-            <Button Content="Delete" Command="{Binding DeleteCulture}" Margin="516,156,85,166" />
+        <ComboBox Grid.Row="4" Grid.Column="7" Grid.ColumnSpan="4" Grid.RowSpan="2" FontSize="17"
+            ItemsSource="{Binding CmbBoxItems}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCultureItem}"  
+        />
 
-        </Grid>
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" FontSize="16"  Grid.ColumnSpan="4" Grid.RowSpan="2" Style="{StaticResource MyTextStyle}">
+        Введіть<LineBreak/>назву культури:
+        </TextBlock>
+        <Button Content="Add" Grid.Column="2" Grid.ColumnSpan="4" Grid.RowSpan="2" Grid.Row="8" Command="{Binding AddCulture}" Style="{StaticResource RoundedButtonStylee}" />
+        <TextBox FontSize="17" x:Name="AddCulture" Grid.Column="2" Grid.ColumnSpan="4" Grid.RowSpan="2" Grid.Row="4" Text="{Binding NameOfCulture, UpdateSourceTrigger=PropertyChanged}" 
+                 Style="{StaticResource MyTextStyle1}"/>
+
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="6" FontSize="16"  Grid.ColumnSpan="6" Grid.RowSpan="2" Style="{StaticResource MyTextStyle}">
+        Виберіть<LineBreak/>овоч для видалення:
+        </TextBlock>
+        <Button Content="Delete" Grid.Column="7" Grid.Row="8" Grid.ColumnSpan="4" Grid.RowSpan="2" Command="{Binding DeleteCulture}" Style="{StaticResource RoundedButtonStylee}"/>
     </Grid>
 </Window>

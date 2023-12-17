@@ -8,9 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\icons8-карандаш-50.png" />
-    <None Remove="Resources\Image.png" />
-    <None Remove="Resources\teplitsa.jpg" />
     <None Remove="Views\Resources\icons8-карандаш-50.png" />
     <None Remove="Views\Resources\Image.png" />
     <None Remove="Views\Resources\teplitsa.jpg" />
@@ -19,12 +16,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="Npgsql" Version="8.0.0" />
+    <PackageReference Include="WPFPlot" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\icons8-карандаш-50.png" />
-    <Resource Include="Resources\Image.png" />
-    <Resource Include="Resources\teplitsa.jpg" />
     <Resource Include="Views\Resources\icons8-карандаш-50.png" />
     <Resource Include="Views\Resources\Image.png" />
     <Resource Include="Views\Resources\teplitsa.jpg" />

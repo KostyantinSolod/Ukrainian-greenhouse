@@ -18,7 +18,7 @@ namespace Ukrainian_greenhouse.ViewModels
             _userModel = new UserModel();
             connection = new NpgsqlConnection(connectionString);
         }
-        
+
         public UserModel User => _userModel;
 
         private ICommand _loginCommand;
@@ -41,21 +41,13 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
+
+        
         private void Login()
         {
             if (User.Login != null && User.Password != null)
             {
-                bool isValidUser = ValidateUser(User.Login, User.Password);
+                bool isValidUser = ValidateUser();
 
                 if (isValidUser)
                 {
@@ -76,7 +68,7 @@ namespace Ukrainian_greenhouse.ViewModels
                 MessageBox.Show("Не всі поля заповнені");
             }
         }
-        private bool ValidateUser(string login, string password)
+        private bool ValidateUser()
         {
             bool isValid = false;
             
@@ -89,9 +81,9 @@ namespace Ukrainian_greenhouse.ViewModels
                     using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
                     {
                         cmd.Parameters.Add(new NpgsqlParameter("Login", NpgsqlTypes.NpgsqlDbType.Text));
-                        cmd.Parameters["Login"].Value = login;
+                        cmd.Parameters["Login"].Value = User.Login;
                         cmd.Parameters.Add(new NpgsqlParameter("Password", NpgsqlTypes.NpgsqlDbType.Text));
-                        cmd.Parameters["Password"].Value = password;
+                        cmd.Parameters["Password"].Value = User.Password;
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
 
                         isValid = count > 0;
@@ -108,9 +100,7 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             Registration RegistrationWindow = new Registration();
             RegistrationWindow.Show();
-            Application.Current.MainWindow.Hide();
-            
+            Application.Current.MainWindow.Close();
         }
-        
     }
 }
