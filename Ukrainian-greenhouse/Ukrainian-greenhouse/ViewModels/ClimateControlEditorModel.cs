@@ -22,17 +22,6 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         public DateTime Timestamp { get; private set; }
         
-        private Control _ControlWindow;
-        public Control ControlWindow
-        {
-            get => _ControlWindow;
-            set
-            {
-                _ControlWindow = value;
-                OnPropertyChanged(nameof(ControlWindow));
-            }
-        }
-
         private double _temperature;
         public double Temperature
         {

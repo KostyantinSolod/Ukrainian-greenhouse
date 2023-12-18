@@ -12,6 +12,7 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
+        CultureItemID cultureItemID = new CultureItemID();
         private CultureItemID _cultureItemID;
         public ReportDataModel(CultureItemID cultureItemID)
         {

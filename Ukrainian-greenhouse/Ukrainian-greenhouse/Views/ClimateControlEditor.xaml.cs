@@ -22,7 +22,6 @@ namespace Ukrainian_greenhouse.Views
             InitializeComponent();
             ClimateControlEditorModel viewModel = new ClimateControlEditorModel();
             DataContext = viewModel;
-            
         }
     }
 }

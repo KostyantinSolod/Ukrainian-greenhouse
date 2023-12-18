@@ -6,12 +6,11 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Ukrainian_greenhouse;
 using Ukrainian_greenhouse.Views;
 
 namespace Ukrainian_greenhouse.ViewModels
 {
-    
+
     internal class EditCmbViewModel : BaseViewModel
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";

@@ -13,8 +13,9 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class MonitoringDataModel : BaseViewModel
     {
-        public MonitoringDataModel() { }
+        CultureItemID cultureItemID = new CultureItemID();
         private CultureItemID _cultureItemID;
+        public MonitoringDataModel() { }
         public MonitoringDataModel(CultureItemID cultureItemID)
         {
             _cultureItemID = cultureItemID;
@@ -39,10 +40,23 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
+        private CultureItem _selectedCultureItem;
+
+        public CultureItem SelectedCultureItem
+        {
+            get { return _selectedCultureItem; }
+            set
+            {
+                _selectedCultureItem = value;
+                OnPropertyChanged(nameof(SelectedCultureItem));
+            }
+        }
         private void Report_Data()
         {
+            cultureItemID.Id = SelectedCultureItem.Id;
+
             ReportData reportData = new ReportData();
-            reportData.DataContext = new ReportDataModel(_cultureItemID);
+            reportData.DataContext = new ReportDataModel(cultureItemID);
             reportData.Show();
         }
         private void Diagram_Data()

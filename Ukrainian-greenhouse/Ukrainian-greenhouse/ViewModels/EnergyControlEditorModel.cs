@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,7 +11,16 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         private readonly string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
-
+        public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
+        public EnergyControlEditorModel() 
+        {
+            LoadData();
+        }
+        private CultureItemID _cultureItemID;
+        public EnergyControlEditorModel(CultureItemID cultureItemID)
+        {
+            _cultureItemID = cultureItemID;
+        }
         private DateTime _energyConsumed;
         public DateTime EnergyConsumed
         {
@@ -21,16 +31,6 @@ namespace Ukrainian_greenhouse.ViewModels
                 OnPropertyChanged(nameof(EnergyConsumed));
             }
         }
-        private SolidColorBrush _buttonBackground;
-        public SolidColorBrush ButtonBackground
-        {
-            get => _buttonBackground;
-            set
-            {
-                _buttonBackground = value;
-                OnPropertyChanged(nameof(ButtonBackground));
-            }
-        }
         private int _numberOfLamps;
         public int NumberOfLamps
         {
@@ -39,16 +39,6 @@ namespace Ukrainian_greenhouse.ViewModels
             {
                 _numberOfLamps = value;
                 OnPropertyChanged(nameof(NumberOfLamps));
-            }
-        }
-        private double _totalEnergyUse;
-        public double TotalEnergyUse
-        {
-            get => _totalEnergyUse;
-            set
-            {
-                _totalEnergyUse = value;
-                OnPropertyChanged(nameof(TotalEnergyUse));
             }
         }
 
@@ -62,7 +52,66 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
+        private CultureItem _selectedCultureItem;
 
+        public CultureItem SelectedCultureItem
+        {
+            get { return _selectedCultureItem; }
+            set
+            {
+                _selectedCultureItem = value;
+                OnPropertyChanged(nameof(SelectedCultureItem));
+            }
+        }
+        private ICommand _comboBoxSelectionChanged;
+        public ICommand ComboBoxSelectionChanged
+        {
+            get
+            {
+                return _comboBoxSelectionChanged ?? (_comboBoxSelectionChanged = new RelayCommand(
+                    param => ComboBox_SelectionChanged()
+                ));
+            }
+        }
+        private string _nameLamp;
+        public string NameLamp
+        {
+            get { return _nameLamp; }
+            set
+            {
+                _nameLamp = value;
+                OnPropertyChanged(nameof(NameLamp));
+            }
+        }
+
+        private void ComboBox_SelectionChanged()
+        {
+            if (SelectedCultureItem != null)
+            {
+                string nameLamp = SelectedCultureItem._nameLamp;
+                _nameLamp = nameLamp;
+            }
+        }
+        private void LoadData()
+        {
+            using (connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT (name_of_lamp) FROM list_lamp", connection))
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CultureItem cultureItem = new CultureItem
+                        {
+                            _nameLamp = reader.GetString(0)
+                        };
+                        CmbBoxItems.Add(cultureItem);
+                    }
+                }
+            }
+        }
         private void SaveClick()
         {
             if (_numberOfLamps >= 0 && _numberOfLamps <= 10)
@@ -78,7 +127,7 @@ namespace Ukrainian_greenhouse.ViewModels
 
                         using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                         {
-                            cmd.Parameters.AddWithValue("@listId", 2);
+                            cmd.Parameters.AddWithValue("@listId", _cultureItemID.Id);
                             cmd.Parameters.AddWithValue("@energy_consumed", DateTime.Now);
                             cmd.Parameters.AddWithValue("@number_of_lamps", _numberOfLamps);
 

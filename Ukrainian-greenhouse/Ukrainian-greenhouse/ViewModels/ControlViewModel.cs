@@ -143,9 +143,9 @@ namespace Ukrainian_greenhouse.ViewModels
             {
                 cultureItemID.Id = SelectedCultureItem.Id;
 
-                ClimateControlEditor wateringControlEditor = new ClimateControlEditor();
-                wateringControlEditor.DataContext = new ClimateControlEditorModel(cultureItemID);
-                wateringControlEditor.Show();
+                ClimateControlEditor climatControlEditor = new ClimateControlEditor();
+                climatControlEditor.DataContext = new ClimateControlEditorModel(cultureItemID);
+                climatControlEditor.Show();
             }
             else
             {
@@ -171,9 +171,10 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             if (SelectedCultureItem != null)
             {
-                int listId = SelectedCultureItem.Id;
+                cultureItemID.Id = SelectedCultureItem.Id;
 
                 EnergyControlEditor energyControlEditor = new EnergyControlEditor();
+                energyControlEditor.DataContext = new EnergyControlEditorModel(cultureItemID);
                 energyControlEditor.Show();
             }
             else
@@ -187,9 +188,9 @@ namespace Ukrainian_greenhouse.ViewModels
             {
                 cultureItemID.Id = SelectedCultureItem.Id;
 
-                MonitoringData wateringControlEditor = new MonitoringData();
-                wateringControlEditor.DataContext = new MonitoringDataModel(cultureItemID);
-                wateringControlEditor.Show();
+                MonitoringData monitoringControlEditor = new MonitoringData();
+                monitoringControlEditor.DataContext = new MonitoringDataModel(cultureItemID);
+                monitoringControlEditor.Show();
             }
             else
             {
