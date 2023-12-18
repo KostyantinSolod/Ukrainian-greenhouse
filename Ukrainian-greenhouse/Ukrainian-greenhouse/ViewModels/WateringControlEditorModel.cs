@@ -14,6 +14,13 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
+
+        public WateringControlEditorModel(){}
+        private CultureItemID _cultureItemID;
+        public WateringControlEditorModel(CultureItemID cultureItemID)
+        {
+            _cultureItemID = cultureItemID;
+        }
         public DateTime Timestamp { get; private set; }
         private ICommand _saveCommand;
         public ICommand SaveCommand
@@ -54,7 +61,7 @@ namespace Ukrainian_greenhouse.ViewModels
         //}
         private void SaveClick()
         {
-            if (_irrigation_volume > 0)
+            if (_irrigation_volume >= 0)
             {
                 try
                 {
@@ -67,7 +74,7 @@ namespace Ukrainian_greenhouse.ViewModels
 
                         using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                         {
-                            cmd.Parameters.AddWithValue("@listId", 2);
+                            cmd.Parameters.AddWithValue("@listId", _cultureItemID.Id);
                             cmd.Parameters.AddWithValue("@irrigation_time", DateTime.Now);
                             cmd.Parameters.AddWithValue("@irrigation_volume", _irrigation_volume);
 

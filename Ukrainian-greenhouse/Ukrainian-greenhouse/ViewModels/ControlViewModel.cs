@@ -11,7 +11,7 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
-
+        CultureItemID cultureItemID = new CultureItemID();
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
 
         private ICommand _climateControl;
@@ -91,23 +91,6 @@ namespace Ukrainian_greenhouse.ViewModels
             }
         }
 
-        //private async void FillComboBoxAsync()
-        //{
-        //    finters.Items.Clear();
-        //    if (tablesComboBox.SelectedItem != null)
-        //    {
-        //        NpgsqlConnection conn = new NpgsqlConnection(sql);
-        //        await conn.OpenAsync(); // асинхронне відкриття з'єднання
-        //        string query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + tablesComboBox.Text + "'";
-        //        NpgsqlCommand cmd = new NpgsqlCommand(query, conn);
-        //        NpgsqlDataReader reader = await cmd.ExecuteReaderAsync(); // асинхронне виконання запиту
-        //        while (await reader.ReadAsync()) // асинхронне читання результатів
-        //        {
-        //            string columnName = reader.GetString(0);
-        //            finters.Items.Add(columnName);
-        //        }
-        //    }
-        //}
         private void LoadData()
         {
             using (connection = new NpgsqlConnection(connectionString))
@@ -158,10 +141,11 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             if (SelectedCultureItem != null)
             {
-                int listId = SelectedCultureItem.Id;
+                cultureItemID.Id = SelectedCultureItem.Id;
 
-                ClimateControlEditor climateControlEditor = new ClimateControlEditor();
-                climateControlEditor.Show();
+                ClimateControlEditor wateringControlEditor = new ClimateControlEditor();
+                wateringControlEditor.DataContext = new ClimateControlEditorModel(cultureItemID);
+                wateringControlEditor.Show();
             }
             else
             {
@@ -172,9 +156,10 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             if (SelectedCultureItem != null)
             {
-                int listId = SelectedCultureItem.Id;
+                cultureItemID.Id = SelectedCultureItem.Id;
 
                 WateringControlEditor wateringControlEditor = new WateringControlEditor();
+                wateringControlEditor.DataContext = new WateringControlEditorModel(cultureItemID);
                 wateringControlEditor.Show();
             }
             else
@@ -200,10 +185,11 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             if (SelectedCultureItem != null)
             {
-                int listId = SelectedCultureItem.Id;
+                cultureItemID.Id = SelectedCultureItem.Id;
 
-                MonitoringData monitoringData = new MonitoringData();
-                monitoringData.Show();
+                MonitoringData wateringControlEditor = new MonitoringData();
+                wateringControlEditor.DataContext = new MonitoringDataModel(cultureItemID);
+                wateringControlEditor.Show();
             }
             else
             {

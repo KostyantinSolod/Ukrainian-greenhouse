@@ -12,7 +12,11 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
-
+        private CultureItemID _cultureItemID;
+        public ReportDataModel(CultureItemID cultureItemID)
+        {
+            _cultureItemID = cultureItemID;
+        }
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
 
         public ReportDataModel()
@@ -158,7 +162,26 @@ namespace Ukrainian_greenhouse.ViewModels
                 OnPropertyChanged(nameof(IrrigationVolumeInformation));
             }
         }
-
+        private DateTime _energyConsumed;
+        public DateTime EnergyConsumed
+        {
+            get => _energyConsumed;
+            set
+            {
+                _energyConsumed = value;
+                OnPropertyChanged(nameof(EnergyConsumed));
+            }
+        }
+        private double _numberOfLamps;
+        public double NumberOfLamps
+        {
+            get { return _numberOfLamps; }
+            set
+            {
+                _numberOfLamps = value;
+                OnPropertyChanged(nameof(NumberOfLamps));
+            }
+        }
         private void SelectData()
         {
             try
@@ -167,11 +190,11 @@ namespace Ukrainian_greenhouse.ViewModels
                 {
                     connection.Open();
 
-                    string selectQuery = "SELECT CC.timestamp, CC.temperature, CC.humidity, WS.irrigation_time, WS.irrigation_volume FROM climate_control AS CC RIGHT JOIN watering_schedule AS WS ON CC.list_id = WS.list_id WHERE WS.list_id = @ListId ORDER BY CC.id DESC LIMIT 1";
+                    string selectQuery = "SELECT CC.timestamp, CC.temperature, CC.humidity, WS.irrigation_time, WS.irrigation_volume, EM.energy_consumed, EM.number_of_lamps FROM climate_control AS CC RIGHT JOIN watering_schedule AS WS ON CC.list_id = WS.list_id RIGHT JOIN energy_management AS EM ON WS.list_id = EM.list_id WHERE WS.list_id = @ListId ORDER BY CC.id DESC LIMIT 1;";
 
                     using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
                     {
-                        cmd.Parameters.AddWithValue("@ListId", 2);
+                        cmd.Parameters.AddWithValue("@ListId", _cultureItemID.Id);
 
                         using (NpgsqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -182,6 +205,8 @@ namespace Ukrainian_greenhouse.ViewModels
                                 _humidityInformation = reader.GetDouble(2);
                                 _irrigationTimeInformation = reader.GetDateTime(3);
                                 _irrigationVolumeInformation = reader.GetDouble(4);
+                                _energyConsumed = reader.GetDateTime(5);
+                                _numberOfLamps = reader.GetDouble(6);
                             }
                         }
                     }
@@ -201,18 +226,20 @@ namespace Ukrainian_greenhouse.ViewModels
                 {
                     connection.Open();
 
-                    string insertQuery = "INSERT INTO greenhouse_monitoring (list_id, timestamp_report, timestamp_information , temperature_information, humidity_information, irrigation_time_information , irrigation_volume_information)" +
-                                         "VALUES (@list_id, @timestamp_report, @timestamp_information , @temperature_information, @humidity_information, @irrigation_time_information, @irrigation_volume_information)";
+                    string insertQuery = "INSERT INTO greenhouse_monitoring (list_id, timestamp_report, timestamp_information , temperature_information, humidity_information, irrigation_time_information , irrigation_volume_information, energy_consumed, number_of_lamps)" +
+                                         "VALUES (@list_id, @timestamp_report, @timestamp_information , @temperature_information, @humidity_information, @irrigation_time_information, @irrigation_volume_information, @energy_consumed, @number_Of_Lamps)";
 
                     using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                     {
-                        cmd.Parameters.AddWithValue("@list_Id", 2);
+                        cmd.Parameters.AddWithValue("@list_Id", _cultureItemID.Id);
                         cmd.Parameters.AddWithValue("@timestamp_report", _timestampReport);
                         cmd.Parameters.AddWithValue("@timestamp_information", _timestampInformation);
                         cmd.Parameters.AddWithValue("@temperature_information", _temperatureInformation);
                         cmd.Parameters.AddWithValue("@humidity_information", _humidityInformation);
                         cmd.Parameters.AddWithValue("@irrigation_time_information", _irrigationTimeInformation);
                         cmd.Parameters.AddWithValue("@irrigation_volume_information", _irrigationVolumeInformation);
+                        cmd.Parameters.AddWithValue("@energy_consumed", _energyConsumed);
+                        cmd.Parameters.AddWithValue("@number_Of_Lamps", _numberOfLamps);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -231,12 +258,12 @@ namespace Ukrainian_greenhouse.ViewModels
                 {
                     connection.Open();
                     string query = "SELECT timestamp_information, temperature_information, humidity_information, " +
-                                   "irrigation_time_information, irrigation_volume_information " +
-                                   "FROM greenhouse_monitoring WHERE list_id = @ListId ORDER BY id DESC LIMIT 1";
+               "irrigation_time_information, irrigation_volume_information, energy_consumed, number_of_lamps " +
+               "FROM greenhouse_monitoring WHERE list_id = @ListId ORDER BY id DESC LIMIT 1";
 
                     using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@ListId", 2);
+                        cmd.Parameters.AddWithValue("@ListId", _cultureItemID.Id);
 
                         using (NpgsqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -247,6 +274,8 @@ namespace Ukrainian_greenhouse.ViewModels
                                 HumidityInformation = reader.GetDouble(2);
                                 IrrigationTimeInformation = reader.GetDateTime(3);
                                 IrrigationVolumeInformation = reader.GetDouble(4);
+                                EnergyConsumed = reader.GetDateTime(5);
+                                NumberOfLamps = reader.GetInt32(6);
                             }
                         }
                     }

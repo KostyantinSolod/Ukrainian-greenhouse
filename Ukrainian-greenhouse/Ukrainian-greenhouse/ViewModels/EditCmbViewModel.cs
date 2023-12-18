@@ -11,11 +11,16 @@ using Ukrainian_greenhouse.Views;
 
 namespace Ukrainian_greenhouse.ViewModels
 {
+    
     internal class EditCmbViewModel : BaseViewModel
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
-
+        private CultureItemID _cultureItemID;
+        public EditCmbViewModel(CultureItemID cultureItemID)
+        {
+            _cultureItemID = cultureItemID;
+        }
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
 
         private EditCmb _editWindow;

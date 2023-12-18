@@ -11,14 +11,14 @@ namespace Ukrainian_greenhouse.ViewModels
         private readonly string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
 
-        private DateTime _timestamp;
-        public DateTime Timestamp
+        private DateTime _energyConsumed;
+        public DateTime EnergyConsumed
         {
-            get => _timestamp;
+            get => _energyConsumed;
             set
             {
-                _timestamp = value;
-                OnPropertyChanged(nameof(Timestamp));
+                _energyConsumed = value;
+                OnPropertyChanged(nameof(EnergyConsumed));
             }
         }
         private SolidColorBrush _buttonBackground;
@@ -31,88 +31,71 @@ namespace Ukrainian_greenhouse.ViewModels
                 OnPropertyChanged(nameof(ButtonBackground));
             }
         }
-        private bool _electricity;
-        public bool Electricity
+        private int _numberOfLamps;
+        public int NumberOfLamps
         {
-            get => _electricity;
+            get => _numberOfLamps;
             set
             {
-                _electricity = value;
-                OnPropertyChanged(nameof(Electricity));
-                UpdateButtonBackground();
+                _numberOfLamps = value;
+                OnPropertyChanged(nameof(NumberOfLamps));
+            }
+        }
+        private double _totalEnergyUse;
+        public double TotalEnergyUse
+        {
+            get => _totalEnergyUse;
+            set
+            {
+                _totalEnergyUse = value;
+                OnPropertyChanged(nameof(TotalEnergyUse));
             }
         }
 
         private ICommand _saveCommand;
-        public ICommand SaveCommand => _saveCommand ?? (_saveCommand = new RelayCommand(param => SaveClick()));
+        public ICommand SaveCommand
+        {
+            get
+            {
+                return _saveCommand ?? (_saveCommand = new RelayCommand(
+                    param => SaveClick()
+                ));
+            }
+        }
 
         private void SaveClick()
         {
-            try
+            if (_numberOfLamps >= 0 && _numberOfLamps <= 10)
             {
-                using (connection = new NpgsqlConnection(connectionString))
+                try
                 {
-                    connection.Open();
-
-                    string insertQuery = "INSERT INTO energy_management (list_id, electricity, energy_consumed) " +
-                                         "VALUES (@listId, @electricity, @timestamp)";
-
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                    using (connection = new NpgsqlConnection(connectionString))
                     {
-                        cmd.Parameters.AddWithValue("@listId", 2);
-                        cmd.Parameters.AddWithValue("@electricity", _electricity);
-                        cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
+                        connection.Open();
 
-                        cmd.ExecuteNonQuery();
-                    }
-                }
+                        string insertQuery = "INSERT INTO energy_management (list_id, energy_consumed, number_of_lamps) " +
+                                             "VALUES (@listId, @energy_consumed, @number_of_lamps)";
 
-                LoadLastData(); // Після збереження, перезавантажуємо дані для відображення
-                MessageBox.Show("Climate control data added successfully!");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void LoadLastData()
-        {
-            try
-            {
-                using (connection = new NpgsqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string selectQuery = "SELECT electricity FROM energy_management ORDER BY energy_id DESC LIMIT 1";
-
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
-                    {
-                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                         {
-                            if (reader.Read())
-                            {
-                                _electricity = reader.GetBoolean(0);
-                                Timestamp = DateTime.Now; // Добавлено для примера, так как energy_consumed не используется
-                            }
+                            cmd.Parameters.AddWithValue("@listId", 2);
+                            cmd.Parameters.AddWithValue("@energy_consumed", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@number_of_lamps", _numberOfLamps);
+
+                            cmd.ExecuteNonQuery();
                         }
                     }
+                    MessageBox.Show("Climate control data added successfully!");
                 }
-
-                UpdateButtonBackground();
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error while loading data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Введіть коректрні дані! \nМінімальна кількість ламп 0, максимальна 10!");
             }
-        }
-
-        private void UpdateButtonBackground()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                ButtonBackground = _electricity ? Brushes.Green : Brushes.Red;
-            });
         }
     }
 }

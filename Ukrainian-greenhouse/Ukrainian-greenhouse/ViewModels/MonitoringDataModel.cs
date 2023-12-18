@@ -13,6 +13,12 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class MonitoringDataModel : BaseViewModel
     {
+        public MonitoringDataModel() { }
+        private CultureItemID _cultureItemID;
+        public MonitoringDataModel(CultureItemID cultureItemID)
+        {
+            _cultureItemID = cultureItemID;
+        }
         private ICommand _reportData;
         public ICommand ReportData
         {
@@ -35,8 +41,9 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Report_Data()
         {
-                ReportData reportData = new ReportData();
-                reportData.Show();
+            ReportData reportData = new ReportData();
+            reportData.DataContext = new ReportDataModel(_cultureItemID);
+            reportData.Show();
         }
         private void Diagram_Data()
         {

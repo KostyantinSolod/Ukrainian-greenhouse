@@ -14,6 +14,12 @@ namespace Ukrainian_greenhouse.ViewModels
     {
         string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
+        public ClimateControlEditorModel() { }
+        private CultureItemID _cultureItemID;
+        public ClimateControlEditorModel(CultureItemID cultureItemID)
+        {
+            _cultureItemID = cultureItemID;
+        }
         public DateTime Timestamp { get; private set; }
         
         private Control _ControlWindow;
@@ -57,12 +63,6 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
-        //private readonly int _listId; // Додайте поле для зберігання list_id
-
-        //public ClimateControlEditorModel(int listId)
-        //{
-        //    _listId = listId;
-        //}
         private void SaveClick()
         {
             if (_temperature > 0 && _humidity > 0)
@@ -78,7 +78,7 @@ namespace Ukrainian_greenhouse.ViewModels
 
                         using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                         {
-                            cmd.Parameters.AddWithValue("@listId", 2);
+                            cmd.Parameters.AddWithValue("@listId", _cultureItemID.Id);
                             cmd.Parameters.AddWithValue("@timestamp", DateTime.Now);
                             cmd.Parameters.AddWithValue("@temperature", _temperature);
                             cmd.Parameters.AddWithValue("@humidity", _humidity);
