@@ -36,13 +36,8 @@ namespace Ukrainian_greenhouse.ViewModels
         {
             if (_editWindow != null)
             {
-                Console.WriteLine("Closing window...");
                 _editWindow = new EditCmb();
                 _editWindow.Close();
-            }
-            else
-            {
-                Console.WriteLine("Window is null.");
             }
         }
         private CultureItem _selectedCultureItem;
@@ -139,13 +134,8 @@ namespace Ukrainian_greenhouse.ViewModels
                     {
                         cmd.ExecuteNonQuery();
                     }
-                    string deleteWater = $"DELETE FROM watering_schedule  WHERE list_id = {id}";
+                    string deleteWater = $"DELETE FROM watering_schedule WHERE list_id = {id}";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(deleteWater, connection))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    string deleteMonitoring = $"DELETE FROM greenhouse_monitoring WHERE list_id = {id}";
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(deleteMonitoring, connection))
                     {
                         cmd.ExecuteNonQuery();
                     }
@@ -154,25 +144,48 @@ namespace Ukrainian_greenhouse.ViewModels
                     {
                         cmd.ExecuteNonQuery();
                     }
+                    string deleteMonitoring = $"DELETE FROM greenhouse_monitoring WHERE list_id = {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(deleteMonitoring, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    string updateClimate = $"UPDATE climate_control SET list_id = list_id - 1 WHERE list_id > {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(updateClimate, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    string updateWatering = $"UPDATE watering_schedule SET list_id = list_id - 1 WHERE list_id > {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(updateWatering, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    string updateEnergy = $"UPDATE energy_management SET list_id = list_id - 1 WHERE list_id > {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(updateEnergy, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    string updateMonitoring = $"UPDATE greenhouse_monitoring SET list_id = list_id - 1 WHERE list_id > {id}";
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(updateMonitoring, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
                     string deleteCommand = $"DELETE FROM list WHERE list_id = {id}";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(deleteCommand, connection))
                     {
                         cmd.ExecuteNonQuery();
                     }
-                    string updateCommand = $"UPDATE list SET list_id = list_id - 1 WHERE list_id > @id";
+                    string updateCommand = $"UPDATE list SET list_id = list_id - 1 WHERE list_id > {id}";
                     using (NpgsqlCommand cmd = new NpgsqlCommand(updateCommand, connection))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
                         cmd.ExecuteNonQuery();
                     }
-
                     LoadData();
                 }
+                MessageBox.Show("Успішно!");
                 Edit_Click();
             }
             catch (NpgsqlException ex)
             {
-                MessageBox.Show($"Помилка видалення запису: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -234,7 +247,7 @@ namespace Ukrainian_greenhouse.ViewModels
                 using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM list", connection))
                 using (NpgsqlDataReader reader = cmd.ExecuteReader())
                 {
-                    CmbBoxItems.Clear(); // Очистимо колекцію перед завантаженням нових даних.
+                    CmbBoxItems.Clear();
 
                     while (reader.Read())
                     {

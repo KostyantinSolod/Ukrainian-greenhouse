@@ -70,16 +70,19 @@
         </Grid.Background>
 
         <Button Command="{Binding ReportData}"  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3"
-                Style="{StaticResource RoundedButtonStylee}">
+        Style="{StaticResource RoundedButtonStylee}">
             <TextBlock FontSize="25">Звіт</TextBlock>
         </Button>
-        <Image Grid.Column="1" Grid.Row="3" Source="/Views/Resources/icons8-табель-успеваемости-100.png" Grid.ColumnSpan="3" Margin="43,24,43,23" Grid.RowSpan="3" />
+
+        <Image Grid.Column="1" Grid.Row="3" Source="Resources/icons8-табель-успеваемости-100.png"
+       Grid.ColumnSpan="3" Margin="37,23,37,23" Grid.RowSpan="3"
+       IsHitTestVisible="False" />
 
 
         <Button Command="{Binding DiagramData}" Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="3" Style="{StaticResource RoundedButtonStylee}">
             <TextBlock FontSize="25" TextAlignment="Center">Діаграми</TextBlock>
         </Button>
-        <Image Grid.Column="5" Grid.Row="3"  Source="/Views/Resources/icons8-график-100.png" Stretch="Fill" Grid.ColumnSpan="3" Margin="41,28,41,28" Grid.RowSpan="3" />
+        <Image Grid.Column="5" Grid.Row="3"  Source="Resources/icons8-график-100.png"  Grid.ColumnSpan="3" Margin="41,28,41,28" Grid.RowSpan="3" IsHitTestVisible="False"/>
 
     </Grid>
 </Window>

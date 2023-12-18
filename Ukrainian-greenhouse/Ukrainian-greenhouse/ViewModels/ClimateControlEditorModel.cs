@@ -75,11 +75,11 @@ namespace Ukrainian_greenhouse.ViewModels
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    MessageBox.Show("Climate control data added successfully!");
+                    MessageBox.Show("Дані клімат-контролю успішно додано!");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Помилка під час збереження даних: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else

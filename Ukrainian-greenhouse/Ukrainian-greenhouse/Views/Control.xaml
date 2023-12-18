@@ -94,7 +94,7 @@
         </Button>
 
         <Button x:Name="add_delete" Command="{Binding Edit}" Grid.Row="1" Grid.Column="8" Style="{StaticResource LightweightButton}">
-            <Image Source="D:\GREENHOUSE\Ukrainian-greenhouse\Ukrainian-greenhouse\Ukrainian-greenhouse\Resources/icons8-карандаш-50.png" Stretch="Fill" Margin="0,2,0,2"/>
+            <Image Source="Resources/icons8-карандаш-50.png" Stretch="Fill" Margin="0,2,0,2"/>
         </Button>
 
     </Grid>

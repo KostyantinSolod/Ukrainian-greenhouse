@@ -105,6 +105,7 @@ namespace Ukrainian_greenhouse.ViewModels
                         if (_password == _confirmPassword)
                         {
                             RegisterNewUser();
+                            Application.Current.MainWindow = new MainWindow();
                             Application.Current.MainWindow.Show();
                             _registrationWindow.Close();
                         }

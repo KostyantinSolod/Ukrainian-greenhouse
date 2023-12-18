@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         xmlns:vm="clr-namespace:Ukrainian_greenhouse.ViewModels"
         mc:Ignorable="d"
-        Title="ReportData" Height="450" Width="800">
+        Title="ReportData" Height="700" Width="550">
     <Window.DataContext>
         <vm:ReportDataModel/>
     </Window.DataContext>
@@ -44,34 +44,51 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1,3,1,3" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="7"  Grid.RowSpan="11">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="Lime" Offset="0.0" />
+                    <GradientStop Color="MediumPurple" Offset="0.5" />
+                    <GradientStop Color="Lime" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel Margin="10">
+                <TextBlock  Text="Час клімату:" VerticalAlignment="Center" FontSize="23" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="3" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding TimestampInformation}" VerticalAlignment="Center" FontSize="23" Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="5" Style="{StaticResource MyTextStyle}"/>
 
-        <TextBlock Text="Час клімату:" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding TimestampInformation}" FontSize="17" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="Температура:" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="23" Grid.Column="1" Grid.Row="4" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding TemperatureInformation, StringFormat={}{0}°C}" VerticalAlignment="Center" FontSize="23" Grid.Column="5" Grid.Row="4" Style="{StaticResource MyTextStyle}"/>
 
-        <TextBlock Text="Температура:" Grid.ColumnSpan="2" FontSize="17" Grid.Column="0" Grid.Row="1" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding TemperatureInformation}" FontSize="17" Grid.Column="2" Grid.Row="1" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="Вологість:" FontSize="23" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="3" Grid.Row="5" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding HumidityInformation, StringFormat={}{0}%}" FontSize="23" VerticalAlignment="Center" Grid.Column="5" Grid.Row="5" Style="{StaticResource MyTextStyle}"/>
 
-        <TextBlock Text="Вологість:" FontSize="17" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding HumidityInformation}" FontSize="17" Grid.Column="2" Grid.Row="2" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="Час поливу:" Grid.ColumnSpan="3" VerticalAlignment="Center" FontSize="23" Grid.Column="1" Grid.Row="6" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding IrrigationTimeInformation}" VerticalAlignment="Center" FontSize="23" Grid.Column="5" Grid.Row="6" Grid.ColumnSpan="5" Style="{StaticResource MyTextStyle}"/>
 
-        <TextBlock Text="Час поливу:" Grid.ColumnSpan="2" FontSize="17" Grid.Column="0" Grid.Row="3" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding IrrigationTimeInformation}" FontSize="17" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="Кільксть поливу:" Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="23" Grid.Column="1" Grid.Row="7" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding IrrigationVolumeInformation, StringFormat={}{0} л.}" VerticalAlignment="Center" FontSize="23" Grid.Column="5" Grid.Row="7" Style="{StaticResource MyTextStyle}"/>
 
-        <TextBlock Text="Кільксть поливу:" Grid.ColumnSpan="2" FontSize="17" Grid.Column="0" Grid.Row="4" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding IrrigationVolumeInformation}" FontSize="17" Grid.Column="2" Grid.Row="4" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="Включення ламп:" FontSize="23" VerticalAlignment="Center" Grid.ColumnSpan="4" Grid.Column="1" Grid.Row="8" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding EnergyConsumed}" VerticalAlignment="Center" FontSize="23" Grid.Column="5" Grid.Row="8" Grid.ColumnSpan="5" Style="{StaticResource MyTextStyle}"/>
 
-        <TextBlock Text="Час ламп:" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding EnergyConsumed}" FontSize="17" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
-
-        <TextBlock Text="Кількість ламп:" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="6" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding NumberOfLamps}" FontSize="17" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="Кількість ламп:" FontSize="23" VerticalAlignment="Center" Grid.ColumnSpan="4" Grid.Column="1" Grid.Row="9" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding NumberOfLamps, StringFormat={}{0} шт}" VerticalAlignment="Center" FontSize="23" Grid.Column="5" Grid.Row="9" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+                
+                <TextBlock Text="Споживання енергії:" FontSize="23" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="8" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding TotalEnergyConsumed, StringFormat={}{0} кВт}" FontSize="23" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+                
+            </StackPanel>
+        </Border>
+        
 
         <!--<TextBlock Text="Тип лампи:" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="7" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding }" FontSize="17" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+        <TextBlock Text="{Binding }" FontSize="17" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>-->
 
-        <TextBlock Text="Споживання енергії:" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="8" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding }" FontSize="17" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>-->
+        
 
         <ComboBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5"
             ItemsSource="{Binding CmbBoxItems}"

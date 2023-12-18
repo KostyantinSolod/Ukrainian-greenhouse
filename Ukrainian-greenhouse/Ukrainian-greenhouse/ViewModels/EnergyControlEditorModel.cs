@@ -14,6 +14,7 @@ namespace Ukrainian_greenhouse.ViewModels
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
         public EnergyControlEditorModel() 
         {
+            connection = new NpgsqlConnection(connectionString);
             LoadData();
         }
         private CultureItemID _cultureItemID;
@@ -41,7 +42,16 @@ namespace Ukrainian_greenhouse.ViewModels
                 OnPropertyChanged(nameof(NumberOfLamps));
             }
         }
-
+        private ICommand _selectItem;
+        public ICommand SelectItem
+        {
+            get
+            {
+                return _selectItem ?? (_selectItem = new RelayCommand(
+                    param => LoadData()
+                ));
+            }
+        }
         private ICommand _saveCommand;
         public ICommand SaveCommand
         {
@@ -73,23 +83,34 @@ namespace Ukrainian_greenhouse.ViewModels
                 ));
             }
         }
+
         private string _nameLamp;
-        public string NameLamp
+        public string NameOfLamps
         {
             get { return _nameLamp; }
             set
             {
                 _nameLamp = value;
-                OnPropertyChanged(nameof(NameLamp));
+                OnPropertyChanged(nameof(NameOfLamps));
             }
         }
-
         private void ComboBox_SelectionChanged()
         {
             if (SelectedCultureItem != null)
             {
-                string nameLamp = SelectedCultureItem._nameLamp;
-                _nameLamp = nameLamp;
+                string name = SelectedCultureItem._nameLamp;
+                _nameLamp = name;
+            }
+        }
+
+        private int _selectedListId;
+        public int SelectedListId
+        {
+            get { return _selectedListId; }
+            set
+            {
+                _selectedListId = value;
+                OnPropertyChanged(nameof(SelectedListId));
             }
         }
         private void LoadData()
@@ -98,7 +119,7 @@ namespace Ukrainian_greenhouse.ViewModels
             {
                 connection.Open();
 
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT (name_of_lamp) FROM list_lamp", connection))
+                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT name_of_lamp FROM list_lamp", connection))
                 using (NpgsqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -134,11 +155,11 @@ namespace Ukrainian_greenhouse.ViewModels
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    MessageBox.Show("Climate control data added successfully!");
+                    MessageBox.Show("Дані управління електрикою додано!");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Помилка під час збереження даних: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else

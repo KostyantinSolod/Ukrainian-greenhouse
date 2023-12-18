@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Resources\icons8-график-100.png" />
     <None Remove="Views\Resources\icons8-карандаш-50.png" />
+    <None Remove="Views\Resources\icons8-табель-успеваемости-100.png" />
     <None Remove="Views\Resources\Image.png" />
     <None Remove="Views\Resources\teplitsa.jpg" />
   </ItemGroup>
@@ -20,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Views\Resources\icons8-график-100.png" />
     <Resource Include="Views\Resources\icons8-карандаш-50.png" />
+    <Resource Include="Views\Resources\icons8-табель-успеваемости-100.png" />
     <Resource Include="Views\Resources\Image.png" />
     <Resource Include="Views\Resources\teplitsa.jpg" />
   </ItemGroup>
@@ -31,6 +35,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +47,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

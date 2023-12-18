@@ -1,19 +1,20 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Ukrainian_greenhouse.Views;
 
 namespace Ukrainian_greenhouse.ViewModels
 {
-    class ControlViewModel : BaseViewModel
+    class ControlViewModel : BaseViewModel, INotifyPropertyChanged
     {
         public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
         private NpgsqlConnection connection;
         CultureItemID cultureItemID = new CultureItemID();
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
-
+        
         private ICommand _climateControl;
         public ICommand ClimateControl
         {
@@ -111,6 +112,7 @@ namespace Ukrainian_greenhouse.ViewModels
                     }
                 }
             }
+            OnPropertyChanged(nameof(CmbBoxItems));
         }
 
         private ICommand _comboBoxSelectionChanged;
@@ -149,7 +151,7 @@ namespace Ukrainian_greenhouse.ViewModels
             }
             else
             {
-                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Будь ласка, виберіть культуру зі списку, перш ніж додавати дані клімат-контролю.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Watering_Schedule()
@@ -164,7 +166,7 @@ namespace Ukrainian_greenhouse.ViewModels
             }
             else
             {
-                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Будь ласка, виберіть культуру зі списку, перш ніж додавати дані розкладу поливу.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Energy_Management()
@@ -179,7 +181,7 @@ namespace Ukrainian_greenhouse.ViewModels
             }
             else
             {
-                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Будь ласка, виберіть культуру зі списку, перш ніж додавати дані керування енергоспоживанням.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Monitoring_Data()
@@ -194,7 +196,7 @@ namespace Ukrainian_greenhouse.ViewModels
             }
             else
             {
-                MessageBox.Show("Please select a culture from the ComboBox before adding climate control data.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Будь ласка, виберіть культуру в ComboBox, перш ніж переглядати дані моніторингу.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

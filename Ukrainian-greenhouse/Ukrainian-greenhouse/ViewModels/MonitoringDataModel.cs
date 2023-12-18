@@ -54,16 +54,13 @@ namespace Ukrainian_greenhouse.ViewModels
         }
         private void Report_Data()
         {
-            cultureItemID.Id = SelectedCultureItem.Id;
 
             ReportData reportData = new ReportData();
-            reportData.DataContext = new ReportDataModel(cultureItemID);
             reportData.Show();
         }
         private void Diagram_Data()
         {
-            DiagramData reportData = new DiagramData();
-            reportData.Show();
+            MessageBox.Show("Кнопка розроблюється!\nОчікуйте оновлень...");
         }
     }
 }

@@ -65,14 +65,14 @@
 
         <Button x:Name="Save_climat" Content="Зберегти" Command="{Binding SaveCommand}" Grid.Column="3" Grid.Row="9" Grid.ColumnSpan="5" Style="{StaticResource  RoundedButtonStylee}"/>
 
-        <ComboBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5"
-            ItemsSource="{Binding CmbBoxItems}"
-            DisplayMemberPath="_nameLamp"
-            SelectedItem="{Binding SelectedCultureItem}"
-        />
+        <!--<ComboBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5"
+  ItemsSource="{Binding CmbBoxItems}"
+  DisplayMemberPath="_nameLamp"
+  SelectedItem="{Binding SelectedCultureItem}"
+  VerticalContentAlignment="Center" FontSize="17"/>-->
 
-        <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" FontSize="17" Grid.ColumnSpan="5" Grid.Row="4" Grid.RowSpan="1" Style="{StaticResource MyTextStyle}">Введіть<LineBreak></LineBreak>кількість освітлення:</TextBlock>
-        <TextBox Text="{Binding NumberOfLamps}" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="5" FontSize="17" VerticalContentAlignment="Center"/>
+        <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" FontSize="17" Grid.ColumnSpan="5" Grid.Row="3" Grid.RowSpan="1" Style="{StaticResource MyTextStyle}">Введіть<LineBreak></LineBreak>кількість освітлення:</TextBlock>
+        <TextBox Text="{Binding NumberOfLamps}" Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="5" FontSize="17" VerticalContentAlignment="Center"/>
 
         <!--<TextBlock Text="Вологість:" TextAlignment="Center" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="4"  FontSize="17" Grid.ColumnSpan="5" Style="{StaticResource MyTextStyle}"/>
         <TextBox Text="{Binding Humidity}" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="5" FontSize="17" VerticalContentAlignment="Center"/>-->

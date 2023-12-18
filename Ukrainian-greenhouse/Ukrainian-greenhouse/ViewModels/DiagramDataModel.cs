@@ -9,6 +9,5 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class DiagramDataModel : BaseViewModel
     {
-
     }
 }

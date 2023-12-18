@@ -53,12 +53,6 @@ namespace Ukrainian_greenhouse.ViewModels
                 OnPropertyChanged(nameof(IrrigationVolume));
             }
         }
-        //private readonly int _listId; // Додайте поле для зберігання list_id
-
-        //public ClimateControlEditorModel(int listId)
-        //{
-        //    _listId = listId;
-        //}
         private void SaveClick()
         {
             if (_irrigation_volume >= 0)
@@ -81,11 +75,11 @@ namespace Ukrainian_greenhouse.ViewModels
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    MessageBox.Show("Climate control data added successfully!");
+                    MessageBox.Show("Дані поливу успішно додано!");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error while saving data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Помилка під час збереження даних: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
