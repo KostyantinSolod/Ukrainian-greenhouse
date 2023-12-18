@@ -1,7 +1,11 @@
 CREATE TABLE Users(
 	id SERIAL PRIMARY KEY,
 	login TEXT NOT NULL,
-	password TEXT NOT NULL,
+	password TEXT NOT NULL
+);
+create table list (
+	list_id SERIAL PRIMARY KEY,
+	name_of_culture VARCHAR(25)
 );
 create table climate_control (
     id SERIAL PRIMARY KEY,
@@ -28,10 +32,6 @@ CREATE TABLE greenhouse_monitoring (
     irrigation_time_information TIMESTAMP NOT NULL,
     irrigation_volume_information REAL NOT NULL,
     FOREIGN KEY (list_id) REFERENCES list(list_id)
-);
-create table list (
-	list_id SERIAL PRIMARY KEY,
-	name_of_culture VARCHAR(25)
 );
 CREATE TABLE watering_schedule (
     watering_id SERIAL PRIMARY KEY,
