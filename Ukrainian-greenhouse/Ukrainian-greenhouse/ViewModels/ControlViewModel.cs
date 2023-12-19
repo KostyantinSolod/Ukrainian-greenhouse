@@ -10,7 +10,7 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class ControlViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
+        public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         private NpgsqlConnection connection;
         CultureItemID cultureItemID = new CultureItemID();
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();

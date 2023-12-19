@@ -12,7 +12,7 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class WateringControlEditorModel : BaseViewModel
     {
-        string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
+        string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         private NpgsqlConnection connection;
 
         public WateringControlEditorModel(){}

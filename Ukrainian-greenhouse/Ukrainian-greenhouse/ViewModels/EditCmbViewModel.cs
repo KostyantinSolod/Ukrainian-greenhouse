@@ -13,7 +13,7 @@ namespace Ukrainian_greenhouse.ViewModels
 
     internal class EditCmbViewModel : BaseViewModel
     {
-        public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
+        public string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         private NpgsqlConnection connection;
         private CultureItemID _cultureItemID;
         public EditCmbViewModel(CultureItemID cultureItemID)

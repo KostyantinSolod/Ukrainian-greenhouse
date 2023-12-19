@@ -95,7 +95,7 @@
                  VerticalContentAlignment="Center"></TextBox>
         <TextBlock Grid.Column="7" Grid.Row="6" x:Name="RepeatpasswordText" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource MyTextStyle}"></TextBlock>
 
-        <Button Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="4"  Content="Регістрація" FontSize="24" 
+        <Button Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="4"  Content="Зареєструватись" FontSize="24" 
         Command="{Binding RegisterCommand}" 
         Style="{StaticResource RoundedButtonStylee}" ></Button>
         <Button Grid.Column="6" Grid.Row="7" Grid.ColumnSpan="4" Content="В мене вже є аккаунт" FontSize="24"

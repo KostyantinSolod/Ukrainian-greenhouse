@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Ukrainian_greenhouse"
         xmlns:vm="clr-namespace:Ukrainian_greenhouse.ViewModels"
         mc:Ignorable="d"
-        Title="ReportData" Height="700" Width="550">
+        Title="ReportData" Height="800" Width="550">
     <Window.DataContext>
         <vm:ReportDataModel/>
     </Window.DataContext>
@@ -81,12 +81,14 @@
                 <TextBlock Text="Споживання енергії:" FontSize="23" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="8" Style="{StaticResource MyTextStyle}"/>
                 <TextBlock Text="{Binding TotalEnergyConsumed, StringFormat={}{0} кВт}" FontSize="23" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
                 
+                <TextBlock Text="Вологість почви:" FontSize="23" Grid.ColumnSpan="4" Grid.Column="2" Grid.Row="12" Style="{StaticResource MyTextStyle}"/>
+                <TextBlock Text="{Binding SoilMoisture, StringFormat={}{0} %}" FontSize="23"  Grid.Column="2" Grid.Row="13" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>
+            
             </StackPanel>
         </Border>
-        
 
-        <!--<TextBlock Text="Тип лампи:" FontSize="17" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="7" Style="{StaticResource MyTextStyle}"/>
-        <TextBlock Text="{Binding }" FontSize="17" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="3" Style="{StaticResource MyTextStyle}"/>-->
+
+        
 
         
 

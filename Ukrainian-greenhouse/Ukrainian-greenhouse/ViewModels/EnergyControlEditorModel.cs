@@ -9,12 +9,11 @@ namespace Ukrainian_greenhouse.ViewModels
 {
     class EnergyControlEditorModel : BaseViewModel
     {
-        private readonly string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=control";
+        private readonly string connectionString = "Host=localhost;Username=postgres;Password=2002;Database=Ukrainian-greenhouse";
         private NpgsqlConnection connection;
         public ObservableCollection<CultureItem> CmbBoxItems { get; set; } = new ObservableCollection<CultureItem>();
         public EnergyControlEditorModel() 
         {
-            connection = new NpgsqlConnection(connectionString);
             LoadData();
         }
         private CultureItemID _cultureItemID;
